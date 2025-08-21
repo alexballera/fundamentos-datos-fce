@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exámenes de práctica sobre Fundamentos de Sistemas de Información Gerencial - Capítulos 1-3 Laudon - Sesión 1 FCE">
+    <meta name="keywords" content="sistemas información, MIS, tecnología empresarial, Laudon, FCE, datos, transformación digital">
+    <meta name="author" content="Fundamentos de Datos FCE - UBA">
+    <title>Exámenes de Práctica - Fundamentos de Sistemas de Información Gerencial FCE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #a78bfa 100%);
+        }
+        .quiz-button {
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .quiz-button:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+        }
+        .quiz-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .answer-button {
+            width: 100%;
+            background-color: #e5e7eb;
+            color: #1f2937;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .answer-button:hover:not(:disabled) {
+            background-color: #d1d5db;
+        }
+        .answer-button.correct {
+            background-color: #10b981;
+            color: white;
+            animation: pulse-correct 0.8s;
+        }
+        .answer-button.incorrect {
+            background-color: #ef4444;
+            color: white;
+            animation: shake 0.5s;
+        }
+        .explanation {
+            background-color: #f0f4f8;
+            border-left: 4px solid #4f46e5;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+        }
+        @keyframes pulse-correct {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div id="app" class="container bg-white p-8 rounded-2xl shadow-xl w-full">
+        <!-- Pantalla de selección de cuestionarios -->
+        <div id="quiz-selection-screen">
+            <h1 class="text-3xl font-bold text-center mb-4 text-indigo-700">Selecciona un Examen de Práctica</h1>
+            <p class="text-center text-gray-600 mb-8">Cada examen contiene 20 preguntas aleatorias que abarcan los Capítulos 1, 2 y 3 del libro "Sistemas de Información Gerencial" de Laudon. ¡Mucha suerte!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <button onclick="startQuiz(0)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 1</button>
+                <button onclick="startQuiz(1)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 2</button>
+                <button onclick="startQuiz(2)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 3</button>
+                <button onclick="startQuiz(3)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 4</button>
+                <button onclick="startQuiz(4)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 5</button>
+                <button onclick="startQuiz(5)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 6</button>
+                <button onclick="startQuiz(6)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 7</button>
+                <button onclick="startQuiz(7)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 8</button>
+                <button onclick="startQuiz(8)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 9</button>
+                <button onclick="startQuiz(9)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 10</button>
+            </div>
+        </div>
+
+        <!-- Pantalla del cuestionario -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-lg font-semibold text-gray-700">Pregunta <span id="current-question-number"></span> de 20</div>
+                <div class="text-lg font-semibold text-gray-700">Puntaje: <span id="score">0</span></div>
+            </div>
+            <div class="card p-6 mb-6">
+                <h2 id="question" class="text-xl font-semibold text-gray-900 mb-6"></h2>
+                <div id="options-container" class="space-y-4"></div>
+            </div>
+            <div id="feedback-message" class="text-center p-4 my-4 rounded-lg font-semibold hidden"></div>
+            <button id="next-button" class="quiz-button w-full py-4 mt-6 gradient-bg text-white font-bold text-lg rounded-lg shadow-md focus:outline-none" onclick="nextQuestion()" disabled>Siguiente</button>
+        </div>
+
+        <!-- Pantalla de resultados -->
+        <div id="results-screen" class="hidden text-center">
+            <h1 class="text-3xl font-bold text-indigo-700 mb-4">¡Examen Completo!</h1>
+            <p class="text-xl text-gray-700 mb-6">Tu puntaje final es:</p>
+            <div class="text-5xl font-extrabold text-white gradient-bg p-8 rounded-full inline-block shadow-lg mb-8">
+                <span id="final-score"></span>
+                <span class="block text-2xl font-normal mt-2">de 20</span>
+            </div>
+            <p class="text-lg text-gray-600 mb-4">¡Sigue practicando para dominar los fundamentos de los sistemas de información!</p>
+            <button class="quiz-button py-4 px-8 mt-4 bg-indigo-600 text-white font-bold text-lg rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none" onclick="restartQuiz()">Volver a la selección</button>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // CAPÍTULO 1: Los sistemas de información en los negocios globales contemporáneos
+            {
+                question: "¿Cuál es la definición más precisa de un sistema de información según Laudon?",
+                options: ["Un conjunto de hardware y software", "Una colección interrelacionada de componentes que recolectan, filtran, procesan, crean y distribuyen datos", "Un programa de computadora especializado", "Una base de datos empresarial"],
+                answer: 1,
+                explanation: "Un sistema de información es una colección interrelacionada de componentes que recolectan, filtran, procesan, crean y distribuyen datos para apoyar la toma de decisiones, coordinación y control en una organización."
+            },
+            {
+                question: "¿Cuáles son las tres dimensiones de los sistemas de información según Laudon?",
+                options: ["Hardware, software y datos", "Tecnología, organización y administración", "Input, proceso y output", "Personas, procesos y productos"],
+                answer: 1,
+                explanation: "Las tres dimensiones fundamentales de los sistemas de información son: tecnología (hardware y software), organización (estructura, procedimientos, políticas) y administración (liderazgo, estrategia, toma de decisiones)."
+            },
+            {
+                question: "¿Cuál es el objetivo principal de la excelencia operacional en los sistemas de información?",
+                options: ["Aumentar las ventas", "Mejorar la eficiencia y productividad de los procesos de negocio", "Reducir el personal", "Expandirse a nuevos mercados"],
+                answer: 1,
+                explanation: "La excelencia operacional es uno de los seis objetivos estratégicos clave de los sistemas de información según Laudon. Se enfoca específicamente en mejorar la eficiencia, productividad y rentabilidad de las operaciones mediante la automatización y optimización de procesos."
+            },
+            {
+                question: "Una empresa que utiliza sistemas para crear nuevos productos y servicios está persiguiendo principalmente:",
+                options: ["Excelencia operacional", "Nuevos productos, servicios y modelos de negocio", "Intimidad con clientes y proveedores", "Supervivencia"],
+                answer: 1,
+                explanation: "Nuevos productos, servicios y modelos de negocio es uno de los objetivos estratégicos de los SI que permite a las empresas crear ofertas completamente nuevas, diferenciarse de la competencia e incluso crear industrias completamente nuevas."
+            },
+            {
+                question: "¿Qué significa el término 'empresa digital emergente' según Laudon?",
+                options: ["Una empresa que solo vende por internet", "Una organización donde casi todas las relaciones de negocio significativas son habilitadas digitalmente", "Una startup tecnológica", "Una empresa que fabrica productos digitales"],
+                answer: 1,
+                explanation: "La empresa digital emergente es aquella donde casi todas las relaciones de negocio significativas con clientes, proveedores y empleados se habilitan digitalmente, y donde los procesos de negocio clave se logran a través de redes digitales."
+            },
+            {
+                question: "La metodología sociotécnica de los sistemas de información enfatiza:",
+                options: ["Solo los aspectos tecnológicos", "Solo los aspectos humanos", "La optimización conjunta del sistema social y técnico", "La reducción de costos únicamente"],
+                answer: 2,
+                explanation: "La metodología sociotécnica reconoce que los sistemas de información están compuestos por componentes sociales y técnicos, y que el rendimiento óptimo se logra mediante la optimización conjunta del sistema social y técnico."
+            },
+            {
+                question: "¿Cuál de los siguientes NO es un activo complementario organizacional para los SI?",
+                options: ["Cultura organizacional de apoyo", "Modelo de negocios apropiado", "Procesos de negocio eficientes", "Hardware más rápido"],
+                answer: 3,
+                explanation: "Los activos complementarios organizacionales incluyen cultura, modelo de negocios, procesos y estructura organizacional. El hardware más rápido es un activo tecnológico, no organizacional."
+            },
+            {
+                question: "Según Laudon, ¿cuál es el principal desafío de la globalización para las empresas?",
+                options: ["Diferencias culturales únicamente", "Coordinar, controlar y administrar operaciones a nivel mundial", "Problemas de idioma", "Diferencias de horario"],
+                answer: 1,
+                explanation: "La globalización presenta desafíos significativos de coordinación, control y administración de operaciones distribuidas mundialmente, lo que requiere sistemas de información sofisticados para integrar procesos y actividades."
+            },
+            {
+                question: "Los sistemas de información contribuyen al objetivo de supervivencia empresarial mediante:",
+                options: ["Aumentar las utilidades únicamente", "Permitir a las empresas responder a cambios ambientales", "Reducir el personal", "Mejorar la imagen corporativa"],
+                answer: 1,
+                explanation: "Los sistemas de información son fundamentales para la supervivencia empresarial porque permiten a las organizaciones detectar y responder rápidamente a cambios en el entorno competitivo, regulatorio y tecnológico."
+            },
+            {
+                question: "¿Qué caracteriza a un enfoque de sistemas de información centrado en la tecnología?",
+                options: ["Se enfoca en eficiencia matemática y capacidades técnicas", "Prioriza las necesidades humanas", "Considera aspectos organizacionales", "Balancea todos los elementos"],
+                answer: 0,
+                explanation: "El enfoque técnico se centra en modelos matemáticos, tecnología física y capacidades de software, enfatizando la eficiencia computacional y el rendimiento técnico del sistema."
+            },
+            {
+                question: "La 'intimidad con clientes y proveedores' como objetivo estratégico se refiere a:",
+                options: ["Conocer información personal de los clientes", "Servir a clientes y proveedores de manera tan eficiente que aumenten sus costos de cambio", "Tener reuniones frecuentes con stakeholders", "Ofrecer precios más bajos"],
+                answer: 1,
+                explanation: "La intimidad con clientes y proveedores se logra cuando una empresa conoce tan bien a sus stakeholders y los sirve tan eficientemente que éstos prefieren no cambiar de proveedor debido a los altos costos de cambio."
+            },
+            {
+                question: "¿Cuál es la diferencia principal entre datos e información?",
+                options: ["Los datos son más importantes que la información", "Los datos son hechos sin procesar, la información son datos organizados y procesados", "No hay diferencia", "La información es más cara que los datos"],
+                answer: 1,
+                explanation: "Los datos son hechos crudos que representan eventos, mientras que la información son datos que han sido organizados y procesados para ser significativos y útiles para los seres humanos."
+            },
+            {
+                question: "El concepto de 'activos complementarios' es importante porque:",
+                options: ["Reducen los costos de TI", "Son necesarios para obtener valor de las inversiones en SI", "Mejoran la velocidad de procesamiento", "Facilitan la programación"],
+                answer: 1,
+                explanation: "Los activos complementarios (organizacionales, gerenciales y sociales) son esenciales para realizar el potencial valor de las inversiones en sistemas de información, ya que los sistemas no pueden funcionar efectivamente sin el contexto organizacional adecuado."
+            },
+            {
+                question: "¿Qué representa el modelo de entrada-procesamiento-salida (input-process-output) en los SI?",
+                options: ["El flujo de datos a través del sistema", "La estructura organizacional", "El presupuesto del proyecto", "Las fases de desarrollo"],
+                answer: 0,
+                explanation: "El modelo input-process-output describe el flujo básico de datos a través de un sistema de información: los datos se capturan (input), se transforman (process), y se distribuyen (output) como información útil."
+            },
+            {
+                question: "La perspectiva del comportamiento en los sistemas de información se enfoca en:",
+                options: ["Optimización técnica", "Aspectos psicológicos, sociales y organizacionales", "Reducción de costos", "Velocidad de procesamiento"],
+                answer: 1,
+                explanation: "La perspectiva del comportamiento considera los aspectos humanos, sociales y organizacionales de los sistemas de información, incluyendo temas como resistencia al cambio, política organizacional y impacto social."
+            },
+            {
+                question: "¿Cuál de los siguientes mejor ilustra la transformación digital según Laudon?",
+                options: ["Comprar computadoras más rápidas", "Usar email en lugar de cartas", "Rediseñar completamente los procesos de negocio usando tecnología digital", "Tener una página web corporativa"],
+                answer: 2,
+                explanation: "La transformación digital implica un rediseño fundamental de los procesos de negocio, modelos organizacionales y relaciones con stakeholders utilizando tecnologías digitales, no simplemente automatizar procesos existentes."
+            },
+            {
+                question: "Los sistemas de información apoyan la toma de decisiones mejorada mediante:",
+                options: ["Automatizar todas las decisiones", "Proporcionar información precisa y oportuna a los tomadores de decisiones", "Eliminar la necesidad de gerentes", "Reducir el tiempo de procesamiento"],
+                answer: 1,
+                explanation: "Los sistemas de información mejoran la toma de decisiones al proporcionar a los gerentes información más precisa, completa y oportuna, permitiéndoles tomar decisiones mejor informadas y más rápidas."
+            },
+            {
+                question: "¿Qué significa que los SI tengan un impacto 'habilitador' en los negocios?",
+                options: ["Que reemplazan a los trabajadores", "Que crean nuevas oportunidades de negocio", "Que reducen costos únicamente", "Que automatizan tareas"],
+                answer: 1,
+                explanation: "Los sistemas de información tienen un impacto habilitador porque crean nuevas oportunidades de negocio, permiten nuevos modelos de negocio y hacen posible capacidades que antes no existían."
+            },
+            {
+                question: "El concepto de 'mundo plano' de Thomas Friedman mencionado por Laudon se refiere a:",
+                options: ["La geografía mundial", "La reducción de barreras económicas y comunicativas globales", "La forma de la Tierra", "Los mapas digitales"],
+                answer: 1,
+                explanation: "El 'mundo plano' se refiere a cómo las tecnologías de información han reducido las barreras geográficas y económicas, permitiendo que individuos y organizaciones colaboren y compitan globalmente como nunca antes."
+            },
+            {
+                question: "¿Por qué es importante entender los sistemas de información desde una perspectiva de negocios?",
+                options: ["Para programar mejor", "Porque los SI deben alinearse con objetivos y estrategias organizacionales", "Para reducir costos de hardware", "Para mejorar la velocidad de internet"],
+                answer: 1,
+                explanation: "Es crucial entender los SI desde una perspectiva de negocios porque estos sistemas deben estar alineados con los objetivos, estrategias y necesidades organizacionales para generar valor real y ventaja competitiva."
+            },
+
+            // CAPÍTULO 2: Comercio electrónico global y colaboración
+            {
+                question: "¿Qué es un proceso de negocio según Laudon?",
+                options: ["Un programa de software", "Un conjunto de actividades relacionadas lógicamente para lograr un resultado de negocio específico", "Un departamento de la empresa", "Una base de datos"],
+                answer: 1,
+                explanation: "Un proceso de negocio es un conjunto de actividades relacionadas lógicamente y tareas que se realizan para lograr un resultado de negocio específico, como procesar un pedido o contratar a un empleado."
+            },
+            {
+                question: "¿Cuál es la principal diferencia entre un Sistema de Procesamiento de Transacciones (TPS) y un Sistema de Información Gerencial (MIS)?",
+                options: ["El costo de implementación", "TPS maneja transacciones rutinarias, MIS proporciona informes de gestión", "TPS es más rápido", "MIS es más seguro"],
+                answer: 1,
+                explanation: "Los TPS manejan las transacciones rutinarias diarias de la organización, mientras que los MIS toman datos de los TPS y otras fuentes para proporcionar informes de gestión que apoyan el monitoreo, control y toma de decisiones."
+            },
+            {
+                question: "Los Sistemas de Apoyo a la Toma de Decisiones (DSS) se caracterizan por:",
+                options: ["Automatizar decisiones rutinarias", "Apoyar decisiones no rutinarias que requieren juicio", "Procesar transacciones", "Generar reportes automáticos"],
+                answer: 1,
+                explanation: "Los DSS están diseñados para apoyar decisiones no rutinarias, únicas y que cambian rápidamente, proporcionando herramientas analíticas y modelos para ayudar a los gerentes con problemas que requieren juicio e intuición."
+            },
+            {
+                question: "¿Qué caracteriza a los Sistemas de Apoyo Ejecutivo (ESS)?",
+                options: ["Son utilizados por empleados operativos", "Ayudan a gerentes senior a tomar decisiones estratégicas no rutinarias", "Procesan transacciones de ventas", "Administran inventarios"],
+                answer: 1,
+                explanation: "Los ESS están diseñados para gerentes senior y se enfocan en decisiones estratégicas no rutinarias que requieren juicio y evaluación, incorporando datos de fuentes externas e internas."
+            },
+            {
+                question: "¿Cuál es la definición más precisa de comercio electrónico según Laudon?",
+                options: ["Vender productos por internet", "El proceso de comprar y vender bienes y servicios electrónicamente", "Tener una página web", "Usar computadoras para el negocio"],
+                answer: 1,
+                explanation: "El comercio electrónico abarca el proceso completo de comprar, vender, transferir o intercambiar productos, servicios e información a través de redes de computadoras, principalmente internet."
+            },
+            {
+                question: "La diferencia entre e-business y e-commerce es que:",
+                options: ["Son términos sinónimos", "E-business incluye todos los procesos habilitados digitalmente, e-commerce solo transacciones", "E-commerce es más amplio", "No hay diferencia"],
+                answer: 1,
+                explanation: "E-business se refiere al uso de tecnología digital para habilitar procesos de negocio importantes, mientras que e-commerce se enfoca específicamente en la compra y venta de bienes y servicios en línea."
+            },
+            {
+                question: "¿Cuál es el beneficio principal de la colaboración en los negocios según Laudon?",
+                options: ["Reducir costos únicamente", "Mejorar la calidad, innovación, servicio al cliente y toma de decisiones", "Eliminar gerentes", "Aumentar las horas de trabajo"],
+                answer: 1,
+                explanation: "La colaboración mejora múltiples aspectos del negocio incluyendo la calidad del producto, innovación, servicio al cliente, y toma de decisiones al aprovechar el conocimiento colectivo y la experiencia del equipo."
+            },
+            {
+                question: "¿Qué tecnología es fundamental para habilitar la colaboración moderna según el texto?",
+                options: ["Solo el teléfono", "Internet y tecnologías relacionadas", "Solo el correo electrónico", "Únicamente videoconferencias"],
+                answer: 1,
+                explanation: "Internet y las tecnologías relacionadas (como redes sociales, wikis, sistemas de videoconferencia, y plataformas colaborativas) son fundamentales para habilitar la colaboración moderna y efectiva."
+            },
+            {
+                question: "Los sistemas de información interorganizacionales son aquellos que:",
+                options: ["Funcionan solo dentro de una empresa", "Automatizan el flujo de información entre organizaciones", "Son más baratos", "Solo usan internet"],
+                answer: 1,
+                explanation: "Los sistemas de información interorganizacionales automatizan el flujo de información a través de los límites organizacionales y enlazan a una empresa con sus clientes, distribuidores o proveedores."
+            },
+            {
+                question: "¿Qué es una intranet empresarial?",
+                options: ["Una red de computadoras local", "Una red interna que utiliza tecnología de internet", "Un sitio web público", "Un sistema de correo electrónico"],
+                answer: 1,
+                explanation: "Una intranet es una red interna de la organización que utiliza tecnología de internet y está protegida del acceso público mediante firewalls y otras medidas de seguridad."
+            },
+            {
+                question: "Las extranets se caracterizan por:",
+                options: ["Ser completamente públicas", "Permitir acceso controlado a usuarios externos autorizados", "Ser solo para empleados internos", "No requerir seguridad"],
+                answer: 1,
+                explanation: "Las extranets extienden la intranet de una empresa para dar acceso autorizado a usuarios externos específicos como socios de negocios, proveedores o clientes clave."
+            },
+            {
+                question: "¿Cuál es el rol principal del CIO (Chief Information Officer)?",
+                options: ["Programar software", "Liderar la estrategia de sistemas de información", "Reparar computadoras", "Vender productos"],
+                answer: 1,
+                explanation: "El CIO es responsable de liderar la estrategia de sistemas de información, alineando la TI con los objetivos de negocio y supervisando la inversión en tecnología de información."
+            },
+            {
+                question: "Los sistemas empresariales (Enterprise Systems) se caracterizan por:",
+                options: ["Ser utilizados por una sola persona", "Integrar procesos de negocio clave en toda la organización", "Funcionar solo en computadoras personales", "Ser muy baratos"],
+                answer: 1,
+                explanation: "Los sistemas empresariales integran los procesos de negocio clave de toda la organización en un solo sistema de software, eliminando la duplicación de datos y proporcionando información consistente."
+            },
+            {
+                question: "¿Qué ventaja principal ofrecen los wikis para la colaboración?",
+                options: ["Son más rápidos que el email", "Permiten la creación colaborativa de contenido", "Cuestan menos", "Solo los puede usar una persona"],
+                answer: 1,
+                explanation: "Los wikis permiten que múltiples usuarios creen y editen colaborativamente páginas web sin necesidad de conocimientos técnicos especializados, facilitando la creación colectiva de contenido."
+            },
+            {
+                question: "El concepto de 'trabajo en equipo' según Laudon implica:",
+                options: ["Solo trabajar en la misma oficina", "Colaboración entre individuos que trabajan juntos hacia objetivos compartidos", "Competir entre empleados", "Trabajar horas extras"],
+                answer: 1,
+                explanation: "El trabajo en equipo implica la colaboración entre individuos que trabajan juntos para lograr objetivos compartidos, combinando sus conocimientos, habilidades y perspectivas únicas."
+            },
+            {
+                question: "¿Por qué la tecnología sola no garantiza una colaboración exitosa?",
+                options: ["Es muy cara", "Se necesita también una cultura organizacional que apoye la colaboración", "Es muy complicada", "No es confiable"],
+                answer: 1,
+                explanation: "La colaboración exitosa requiere no solo herramientas tecnológicas, sino también una cultura organizacional que valore y apoye el trabajo colaborativo, junto con incentivos apropiados y liderazgo."
+            },
+            {
+                question: "Los sistemas de gestión de la cadena de suministro (SCM) principalmente:",
+                options: ["Administran solo inventarios", "Ayudan a las empresas a administrar relaciones con proveedores", "Solo procesan órdenes de compra", "Calculan impuestos"],
+                answer: 1,
+                explanation: "Los sistemas SCM ayudan a las empresas a administrar relaciones con sus proveedores, compartir información sobre pedidos, producción, niveles de inventario y entrega de productos."
+            },
+            {
+                question: "¿Cuál es la función principal de los sistemas CRM?",
+                options: ["Administrar recursos humanos", "Ayudar a las empresas a administrar sus relaciones con clientes", "Controlar inventarios", "Procesar nóminas"],
+                answer: 1,
+                explanation: "Los sistemas CRM (Customer Relationship Management) ayudan a las empresas a administrar sus relaciones con clientes actuales y potenciales, proporcionando información para mejorar ventas, marketing y servicio al cliente."
+            },
+            {
+                question: "¿Qué caracteriza a un proceso de negocio multifuncional?",
+                options: ["Solo involucra un departamento", "Cruza múltiples departamentos y funciones", "Es completamente automatizado", "No requiere supervisión"],
+                answer: 1,
+                explanation: "Los procesos de negocio multifuncionales cruzan los límites departamentales tradicionales, integrando actividades de múltiples funciones para lograr objetivos de negocio más amplios."
+            },
+            {
+                question: "Las plataformas de colaboración basadas en la nube ofrecen principalmente:",
+                options: ["Menor costo únicamente", "Acceso desde cualquier ubicación con conexión a internet", "Mayor velocidad", "Mejor seguridad automáticamente"],
+                answer: 1,
+                explanation: "Las plataformas de colaboración basadas en la nube permiten el acceso desde cualquier ubicación con conexión a internet, facilitando el trabajo remoto y la colaboración entre equipos distribuidos geográficamente."
+            },
+            {
+                question: "¿Cuál es el impacto principal de los sistemas de información en los procesos de negocio?",
+                options: ["Los hacen más caros", "Mejoran su eficiencia, precisión y conveniencia", "Los eliminan completamente", "Los hacen más complicados"],
+                answer: 1,
+                explanation: "Los sistemas de información mejoran los procesos de negocio al aumentar su eficiencia, precisión y conveniencia, automatizando tareas rutinarias y proporcionando mejor información para la toma de decisiones."
+            },
+            {
+                question: "El gobierno electrónico (e-government) se refiere principalmente a:",
+                options: ["Computadoras en oficinas gubernamentales", "Uso de tecnología para mejorar servicios gubernamentales y participación ciudadana", "Sitios web del gobierno", "Sistemas de votación"],
+                answer: 1,
+                explanation: "El gobierno electrónico utiliza la tecnología de internet para entregar información y servicios gubernamentales a ciudadanos, empleados gubernamentales, empresas y agencias gubernamentales de manera más eficiente."
+            },
+
+            // CAPÍTULO 3: Sistemas de información, organizaciones y estrategia
+            {
+                question: "Según el modelo de fuerzas competitivas de Porter, ¿cuáles son las cinco fuerzas que determinan la rentabilidad de la industria?",
+                options: ["Clientes, proveedores, competencia, productos nuevos, mercados", "Competidores tradicionales, nuevos participantes, productos sustitutos, clientes, proveedores", "Tecnología, personas, procesos, datos, redes", "Marketing, ventas, producción, finanzas, recursos humanos"],
+                answer: 1,
+                explanation: "Las cinco fuerzas de Porter son: competidores tradicionales de la industria, nuevos participantes en el mercado, productos y servicios sustitutos, clientes, y proveedores. Estas fuerzas determinan colectivamente la rentabilidad de la industria."
+            },
+            {
+                question: "¿Cuál es la principal estrategia de liderazgo en costos según Porter?",
+                options: ["Ofrecer productos únicos", "Producir bienes y servicios al precio más bajo de la industria", "Enfocarse en un nicho específico", "Mejorar la calidad únicamente"],
+                answer: 1,
+                explanation: "La estrategia de liderazgo en costos busca lograr los costos de producción más bajos en la industria, permitiendo a la empresa ofrecer precios más bajos que la competencia mientras mantiene márgenes de ganancia."
+            },
+            {
+                question: "¿Qué es la diferenciación de productos como estrategia competitiva?",
+                options: ["Reducir precios", "Crear productos y servicios únicos que los competidores no pueden duplicar fácilmente", "Aumentar la publicidad", "Contratar más personal"],
+                answer: 1,
+                explanation: "La diferenciación de productos implica crear productos y servicios únicos para los cuales los clientes están dispuestos a pagar precios premium porque no pueden encontrar alternativas equivalentes en otros lugares."
+            },
+            {
+                question: "Los sistemas de información contribuyen a la ventaja competitiva principalmente mediante:",
+                options: ["Reducir el número de empleados", "Cambiar el alcance de la competencia, construir barreras de entrada, y cambiar el poder de negociación", "Aumentar los precios", "Mejorar la decoración de las oficinas"],
+                answer: 1,
+                explanation: "Los SI contribuyen a la ventaja competitiva al cambiar el alcance de la competencia (mercados, productos), construir barreras de entrada para competidores, y alterar el poder de negociación con clientes y proveedores."
+            },
+            {
+                question: "¿Qué es la cadena de valor según Porter?",
+                options: ["El precio de un producto", "Un modelo que ve la empresa como una serie de actividades primarias y de apoyo que agregan valor", "Una lista de precios", "Un organigrama empresarial"],
+                answer: 1,
+                explanation: "La cadena de valor es un modelo que ve la empresa como una serie o cadena de actividades básicas que agregan un margen de valor a los productos o servicios de una empresa."
+            },
+            {
+                question: "Las actividades primarias en la cadena de valor incluyen:",
+                options: ["Recursos humanos y tecnología", "Logística interna, operaciones, logística externa, marketing y servicio", "Solo producción", "Finanzas y contabilidad"],
+                answer: 1,
+                explanation: "Las actividades primarias incluyen logística interna, operaciones (producción), logística externa, marketing y ventas, y servicio. Estas actividades están directamente relacionadas con la producción y distribución del producto."
+            },
+            {
+                question: "¿Cuál es el impacto más significativo de Internet en la ventaja competitiva según Laudon?",
+                options: ["Hace que todas las empresas sean iguales", "Reduce barreras de entrada pero intensifica la rivalidad", "Elimina la competencia", "Solo beneficia a empresas grandes"],
+                answer: 1,
+                explanation: "Internet reduce las barreras de entrada para nuevos competidores pero también intensifica la rivalidad al hacer más fácil la comparación de precios y cambio de proveedores, lo que puede erosionar las ventajas competitivas existentes."
+            },
+            {
+                question: "¿Qué son las competencias básicas de una organización?",
+                options: ["Las habilidades de programación", "Actividades donde la empresa es líder mundial y fuente de ventaja competitiva", "Los productos más baratos", "Las oficinas principales"],
+                answer: 1,
+                explanation: "Las competencias básicas son actividades donde la empresa es líder mundial como resultado de años de experiencia y investigación, y que proporcionan una fuente de ventaja competitiva sostenible."
+            },
+            {
+                question: "El concepto de 'sinergias' en los negocios se refiere a:",
+                options: ["Trabajar más horas", "Cuando el output de algunas unidades puede ser usado como inputs para otras", "Contratar más empleados", "Reducir costos únicamente"],
+                answer: 1,
+                explanation: "Las sinergias ocurren cuando el output de algunas unidades de negocio puede ser usado como inputs para otras unidades, o cuando dos organizaciones comparten mercados y experiencia, creando valor adicional."
+            },
+            {
+                question: "¿Qué caracteriza a un ecosistema de negocios?",
+                options: ["Solo empresas del mismo sector", "Conjuntos de industrias vagamente acopladas", "Una sola empresa grande", "Empresas gubernamentales únicamente"],
+                answer: 1,
+                explanation: "Un ecosistema de negocios es un conjunto de industrias vagamente acopladas que proporcionan servicios y productos relacionados, donde el éxito de una empresa depende del éxito de otras empresas en el ecosistema."
+            },
+            {
+                question: "Los efectos de red se refieren a:",
+                options: ["La velocidad de internet", "Cuando el valor del producto aumenta con el número de usuarios", "El costo de las redes", "La complejidad técnica"],
+                answer: 1,
+                explanation: "Los efectos de red ocurren cuando el valor de un producto o servicio aumenta a medida que más personas lo usan, como las redes sociales, sistemas de pago electrónico o plataformas de comunicación."
+            },
+            {
+                question: "¿Qué es la estrategia de enfoque según Porter?",
+                options: ["Competir en todos los mercados", "Concentrarse en un nicho de mercado específico", "Reducir precios en todos los productos", "Aumentar la publicidad"],
+                answer: 1,
+                explanation: "La estrategia de enfoque se concentra en un nicho de mercado específico y desarrolla productos o servicios únicamente para ese segmento, ya sea a través de liderazgo en costos o diferenciación dentro del nicho."
+            },
+            {
+                question: "Los sistemas de información pueden crear barreras de entrada mediante:",
+                options: ["Reducir precios únicamente", "Crear altos costos de cambio, desarrollar economías de escala, o control de recursos clave", "Contratar más personal", "Mejorar la publicidad"],
+                answer: 1,
+                explanation: "Los SI pueden crear barreras de entrada desarrollando altos costos de cambio para clientes, creando economías de escala en producción, o controlando el acceso a recursos clave como información o canales de distribución."
+            },
+            {
+                question: "¿Cuál es la diferencia principal entre la perspectiva microeconómica y técnica de las organizaciones?",
+                options: ["No hay diferencia", "La microeconómica ve las organizaciones como entidades que maximizan beneficios, la técnica como sistemas estables", "Solo difieren en costos", "Una es más moderna"],
+                answer: 1,
+                explanation: "La perspectiva microeconómica ve las organizaciones como entidades racionales que buscan maximizar beneficios, mientras que la perspectiva técnica las ve como sistemas estables con estructuras formales, reglas y procedimientos."
+            },
+            {
+                question: "¿Cómo impactan los sistemas de información en la estructura organizacional?",
+                options: ["Solo aumentan costos", "Pueden aplanar jerarquías y reducir niveles de gestión", "No tienen impacto", "Solo afectan a la tecnología"],
+                answer: 1,
+                explanation: "Los SI pueden aplanar las jerarquías organizacionales al reducir los costos de adquisición y análisis de información, eliminando la necesidad de algunos niveles de gestión y permitiendo estructuras más descentralizadas."
+            },
+            {
+                question: "¿Qué son los 'costos de cambio' para los clientes?",
+                options: ["El precio de nuevos productos", "Los costos que enfrentan los clientes al cambiar de proveedor", "Los costos de envío", "Los impuestos"],
+                answer: 1,
+                explanation: "Los costos de cambio son todos los costos (tiempo, dinero, esfuerzo) que enfrentan los clientes cuando cambian de un producto o servicio a otro de un competidor diferente."
+            },
+            {
+                question: "El modelo de empresa virtual se caracteriza por:",
+                options: ["Tener muchas oficinas físicas", "Usar redes para enlazar personas, activos e ideas", "Ser muy pequeña", "No usar tecnología"],
+                answer: 1,
+                explanation: "La empresa virtual usa redes y tecnología de información para enlazar personas, activos, e ideas, permitiendo alianzar con otras compañías para crear y distribuir productos sin estar limitadas por los límites organizacionales tradicionales."
+            },
+            {
+                question: "¿Qué significa 'alineación estratégica' en sistemas de información?",
+                options: ["Comprar la tecnología más nueva", "Asegurar que la TI apoye los objetivos y estrategias de negocio", "Reducir costos de TI", "Contratar más programadores"],
+                answer: 1,
+                explanation: "La alineación estratégica significa que los sistemas de información deben estar estrechamente coordinados con los objetivos, estrategias y operaciones de negocio para maximizar el valor y efectividad."
+            },
+            {
+                question: "Las organizaciones post-industriales se caracterizan por:",
+                options: ["Usar menos tecnología", "Autoridad basada en conocimiento y competencia, estructuras más planas", "Ser más jerárquicas", "Eliminar la tecnología"],
+                answer: 1,
+                explanation: "Las organizaciones post-industriales se basan en el conocimiento y competencia más que en la posición formal, tienen estructuras más planas, y dependen fuertemente de equipos profesionales y trabajadores del conocimiento."
+            }
+        ];
+
+        let quizzes = [];
+        let currentQuiz;
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizSelectionScreen = document.getElementById('quiz-selection-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const questionElement = document.getElementById('question');
+        const optionsContainer = document.getElementById('options-container');
+        const currentQuestionNumberElement = document.getElementById('current-question-number');
+        const scoreElement = document.getElementById('score');
+        const nextButton = document.getElementById('next-button');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const finalScoreElement = document.getElementById('final-score');
+
+        // Función para mezclar un array de forma aleatoria (algoritmo Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        // Función para generar los 10 exámenes, cada uno con 20 preguntas aleatorias
+        function generateQuizzes() {
+            quizzes = [];
+            for (let i = 0; i < 10; i++) {
+                shuffleArray(allQuestions);
+                const selectedQuestions = allQuestions.slice(0, 20);
+                quizzes.push({
+                    title: `Examen de Práctica ${i + 1}`,
+                    questions: selectedQuestions
+                });
+            }
+        }
+
+        // Inicia un examen específico por su índice
+        function startQuiz(quizIndex) {
+            currentQuiz = quizzes[quizIndex];
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            quizSelectionScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+
+            showQuestion();
+        }
+
+        // Muestra la pregunta actual y sus opciones
+        function showQuestion() {
+            const currentQuestionData = currentQuiz.questions[currentQuestionIndex];
+
+            currentQuestionNumberElement.textContent = currentQuestionIndex + 1;
+            scoreElement.textContent = score;
+            questionElement.textContent = currentQuestionData.question;
+            optionsContainer.innerHTML = '';
+            feedbackMessage.classList.add('hidden');
+            feedbackMessage.innerHTML = '';
+            nextButton.disabled = true;
+
+            const options = [...currentQuestionData.options];
+            
+            options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-button', 'block');
+                button.onclick = () => checkAnswer(button, index);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Verifica la respuesta seleccionada
+        function checkAnswer(selectedButton, selectedIndex) {
+            const currentQuestionData = currentQuiz.questions[currentQuestionIndex];
+            const correctIndex = currentQuestionData.answer;
+
+            // Deshabilitar todos los botones de opciones para evitar cambios
+            Array.from(optionsContainer.children).forEach((button) => {
+                button.disabled = true;
+            });
+            
+            // Marcar la respuesta correcta con verde
+            optionsContainer.children[correctIndex].classList.add('correct');
+
+            if (selectedIndex === correctIndex) {
+                score++;
+                feedbackMessage.textContent = '¡Respuesta Correcta!';
+                feedbackMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+                feedbackMessage.classList.add('bg-green-100', 'text-green-700');
+            } else {
+                // Marcar la respuesta incorrecta con rojo
+                selectedButton.classList.add('incorrect');
+                feedbackMessage.innerHTML = `
+                    <div class="font-bold mb-2">¡Respuesta Incorrecta!</div>
+                    <div class="explanation">
+                        <strong class="text-indigo-700">Explicación:</strong>
+                        <p class="text-sm mt-1 text-gray-700">${currentQuestionData.explanation}</p>
+                    </div>
+                `;
+                feedbackMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+                feedbackMessage.classList.add('bg-red-100', 'text-red-700');
+            }
+
+            feedbackMessage.classList.remove('hidden');
+            scoreElement.textContent = score;
+            nextButton.disabled = false;
+            nextButton.focus();
+        }
+
+        // Pasa a la siguiente pregunta o finaliza el examen
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < currentQuiz.questions.length) {
+                showQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        // Muestra la pantalla de resultados finales
+        function endQuiz() {
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+            finalScoreElement.textContent = score;
+        }
+
+        // Vuelve a la pantalla de selección de cuestionarios
+        function restartQuiz() {
+            resultsScreen.classList.add('hidden');
+            quizSelectionScreen.classList.remove('hidden');
+            generateQuizzes(); // Regenerar los exámenes para que sean diferentes cada vez
+        }
+
+        // Inicializa la aplicación al cargar la página
+        window.onload = function() {
+            generateQuizzes();
+            quizSelectionScreen.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
