@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exámenes de práctica sobre Sistemas de Información Gerencial - Capítulos 2, 3, 9, 12 Laudon y Capítulos 5, 6 Gilli - Sesión 2 FCE">
+    <meta name="keywords" content="sistemas información, MIS, colaboración, estrategia, aplicaciones empresariales, toma decisiones, Laudon, Gilli, FCE, diseño organizativo">
+    <meta name="author" content="Fundamentos de Datos FCE - UBA">
+    <title>Exámenes de Práctica - Sistemas de Información Gerencial y Diseño Organizativo - Sesión 2 FCE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #a78bfa 100%);
+        }
+        .quiz-button {
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .quiz-button:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+        }
+        .quiz-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .answer-button {
+            width: 100%;
+            background-color: #e5e7eb;
+            color: #1f2937;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .answer-button:hover:not(:disabled) {
+            background-color: #d1d5db;
+        }
+        .answer-button.correct {
+            background-color: #10b981;
+            color: white;
+            animation: pulse-correct 0.8s;
+        }
+        .answer-button.incorrect {
+            background-color: #ef4444;
+            color: white;
+            animation: shake 0.5s;
+        }
+        .explanation {
+            background-color: #f0f4f8;
+            border-left: 4px solid #4f46e5;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+        }
+        @keyframes pulse-correct {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div id="app" class="container bg-white p-8 rounded-2xl shadow-xl w-full">
+        <!-- Pantalla de selección de cuestionarios -->
+        <div id="quiz-selection-screen">
+            <h1 class="text-3xl font-bold text-center mb-4 text-indigo-700">Selecciona un Examen de Práctica - Sesión 2</h1>
+            <p class="text-center text-gray-600 mb-8">Cada examen contiene 20 preguntas aleatorias que abarcan los Capítulos 2, 3, 9, 12 de Laudon y Capítulos 5, 6 de Gilli sobre Sistemas de Información, Estrategia, Aplicaciones Empresariales y Diseño Organizativo. ¡Mucha suerte!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <button onclick="startQuiz(0)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 1</button>
+                <button onclick="startQuiz(1)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 2</button>
+                <button onclick="startQuiz(2)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 3</button>
+                <button onclick="startQuiz(3)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 4</button>
+                <button onclick="startQuiz(4)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 5</button>
+                <button onclick="startQuiz(5)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 6</button>
+                <button onclick="startQuiz(6)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 7</button>
+                <button onclick="startQuiz(7)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 8</button>
+                <button onclick="startQuiz(8)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 9</button>
+                <button onclick="startQuiz(9)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 10</button>
+            </div>
+        </div>
+
+        <!-- Pantalla del cuestionario -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-lg font-semibold text-gray-700">Pregunta <span id="current-question-number"></span> de 20</div>
+                <div class="text-lg font-semibold text-gray-700">Puntaje: <span id="score">0</span></div>
+            </div>
+            <div class="card p-6 mb-6">
+                <h2 id="question" class="text-xl font-semibold text-gray-900 mb-6"></h2>
+                <div id="options-container" class="space-y-4"></div>
+            </div>
+            <div id="feedback-message" class="text-center p-4 my-4 rounded-lg font-semibold hidden"></div>
+            <button id="next-button" class="quiz-button w-full py-4 mt-6 gradient-bg text-white font-bold text-lg rounded-lg shadow-md focus:outline-none" onclick="nextQuestion()" disabled>Siguiente</button>
+        </div>
+
+        <!-- Pantalla de resultados -->
+        <div id="results-screen" class="hidden text-center">
+            <h1 class="text-3xl font-bold text-indigo-700 mb-4">¡Examen Completo!</h1>
+            <p class="text-xl text-gray-700 mb-6">Tu puntaje final es:</p>
+            <div class="text-5xl font-extrabold text-white gradient-bg p-8 rounded-full inline-block shadow-lg mb-8">
+                <span id="final-score"></span>
+                <span class="block text-2xl font-normal mt-2">de 20</span>
+            </div>
+            <p class="text-lg text-gray-600 mb-4">¡Sigue practicando para dominar los sistemas de información y el diseño organizativo!</p>
+            <button class="quiz-button py-4 px-8 mt-4 bg-indigo-600 text-white font-bold text-lg rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none" onclick="restartQuiz()">Volver a la selección</button>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // CAPÍTULO 2: Comercio electrónico global y colaboración
+            {
+                question: "¿Cuál es la principal diferencia entre los Sistemas de Procesamiento de Transacciones (TPS) y los Sistemas de Información Gerencial (MIS)?",
+                options: ["Los TPS son más caros que los MIS", "Los TPS sirven a la gerencia operacional con transacciones diarias, mientras los MIS sirven a la gerencia media con informes de desempeño", "Los MIS procesan más datos que los TPS", "Los TPS solo funcionan en línea"],
+                answer: 1,
+                explanation: "Los TPS sirven al nivel operacional respondiendo preguntas rutinarias y rastreando transacciones diarias, mientras los MIS sirven a la gerencia de nivel medio proporcionando informes sobre el desempeño actual."
+            },
+            {
+                question: "Los Sistemas de Soporte de Decisiones (DSS) se caracterizan principalmente por:",
+                options: ["Procesar transacciones rutinarias", "Soportar decisiones gerenciales no rutinarias utilizando modelos analíticos avanzados", "Generar informes mensuales estándar", "Automatizar procesos operativos"],
+                answer: 1,
+                explanation: "Los DSS están diseñados específicamente para soportar decisiones gerenciales no rutinarias y de rápido cambio, utilizando modelos analíticos avanzados y permitiendo la interacción directa del usuario."
+            },
+            {
+                question: "¿Qué tipo de sistema de información es más apropiado para la gerencia de nivel superior en decisiones estratégicas a largo plazo?",
+                options: ["Sistemas de Procesamiento de Transacciones (TPS)", "Sistemas de Información Gerencial (MIS)", "Sistemas de Apoyo a Ejecutivos (ESS)", "Sistemas de Soporte de Decisiones (DSS)"],
+                answer: 2,
+                explanation: "Los Sistemas de Apoyo a Ejecutivos (ESS) están diseñados para ayudar a la gerencia de nivel superior en decisiones no rutinarias, estratégicas y a largo plazo, presentando información de múltiples fuentes a través de interfaces sencillas."
+            },
+            {
+                question: "Los sistemas empresariales (ERP) contribuyen principalmente a:",
+                options: ["Reducir el número de empleados", "Integrar datos y procesos de negocios de distintas funciones para mejorar el desempeño organizacional", "Automatizar solo el área de ventas", "Eliminar la necesidad de gerentes"],
+                answer: 1,
+                explanation: "Los sistemas empresariales como ERP, SCM y CRM integran datos y procesos de negocios de distintas funciones organizacionales para mejorar significativamente el desempeño organizacional general."
+            },
+            {
+                question: "Según Laudon, ¿cuál es uno de los principales beneficios empresariales de la colaboración?",
+                options: ["Reducir el número de reuniones", "Mayor innovación y mejor desempeño financiero", "Eliminar la competencia interna", "Simplificar la estructura organizacional"],
+                answer: 1,
+                explanation: "La colaboración efectiva produce beneficios empresariales tangibles incluyendo mayor innovación, mejor desempeño financiero, mejora en el servicio al cliente y mayor calidad de productos y servicios."
+            },
+            {
+                question: "Los Sistemas de Administración del Conocimiento (KMS) permiten a las organizaciones:",
+                options: ["Procesar transacciones más rápido", "Capturar, aplicar y compartir conocimiento y experiencia", "Reducir costos de tecnología", "Automatizar la contabilidad"],
+                answer: 1,
+                explanation: "Los KMS están diseñados específicamente para permitir a las organizaciones capturar, aplicar y compartir conocimiento y experiencia, enlazando la empresa con fuentes de conocimiento internas y externas."
+            },
+            {
+                question: "¿Cuál de los siguientes roles NO es típico del departamento de sistemas de información?",
+                options: ["Analistas de sistemas", "Director de información (CIO)", "Director de seguridad (CSO)", "Director de recursos humanos"],
+                answer: 3,
+                explanation: "El Director de recursos humanos no es un rol típico del departamento de sistemas de información. Los roles clave incluyen analistas de sistemas, programadores, CIO, CSO y director del conocimiento (CKO)."
+            },
+            {
+                question: "La 'sabiduría de las masas' en el contexto de colaboración se refiere a:",
+                options: ["Trabajar solo es más eficiente", "Equipos diversos producen mejores resultados más rápido que individuos solos", "Las masas siempre tienen razón", "La colaboración es innecesaria"],
+                answer: 1,
+                explanation: "El concepto de 'sabiduría de las masas' respalda la idea de que equipos diversos y colaborativos pueden producir mejores resultados más rápidamente que individuos trabajando por separado."
+            },
+            {
+                question: "Los sistemas de inteligencia de negocios (BIS) se caracterizan por:",
+                options: ["Solo funcionar a nivel operacional", "Agrupar datos y herramientas de software para organizar, analizar y proveer acceso a información para decisiones documentadas", "Reemplazar a todos los otros sistemas", "Funcionar únicamente con datos externos"],
+                answer: 1,
+                explanation: "Los BIS son sistemas contemporáneos que agrupan datos y herramientas de software para organizar, analizar y proveer acceso a información que permite tomar decisiones más documentadas en todos los niveles organizacionales."
+            },
+            {
+                question: "¿Cuál es la función principal de las intranets en una organización?",
+                options: ["Conectar con competidores", "Incrementar la integración y agilizar el flujo de información dentro de la empresa", "Reemplazar el internet público", "Solo almacenar documentos"],
+                answer: 1,
+                explanation: "Las intranets son herramientas diseñadas para incrementar la integración organizacional y agilizar el flujo de información dentro de la empresa, mientras que las extranets extienden esta conectividad a clientes y proveedores."
+            },
+
+            // CAPÍTULO 3: Sistemas de información, organizaciones y estrategia
+            {
+                question: "Según el modelo de fuerzas competitivas de Porter, ¿cuáles son las cinco fuerzas que determinan el entorno competitivo?",
+                options: ["Precio, calidad, servicio, innovación y marketing", "Competidores tradicionales, nuevos participantes, productos sustitutos, clientes y proveedores", "Tecnología, personal, procesos, estructura y cultura", "Ventas, producción, finanzas, recursos humanos y sistemas"],
+                answer: 1,
+                explanation: "El modelo de Porter identifica cinco fuerzas competitivas: competidores tradicionales, nuevos participantes en el mercado, productos y servicios sustitutos, clientes y proveedores, que juntas determinan el entorno competitivo de una empresa."
+            },
+            {
+                question: "¿Cuál de las siguientes es una estrategia competitiva básica que utiliza SI para lograr ventaja competitiva?",
+                options: ["Aumentar el número de empleados", "Liderazgo de bajo costo utilizando SI para producir productos a menor precio", "Reducir la calidad del producto", "Eliminar la competencia"],
+                answer: 1,
+                explanation: "El liderazgo de bajo costo es una de las cuatro estrategias competitivas básicas, donde los SI se utilizan para producir productos y servicios a menor precio que los competidores, como lo ejemplifica Walmart."
+            },
+            {
+                question: "La estrategia de 'diferenciación de productos' mediante SI implica:",
+                options: ["Copiar productos de la competencia", "Usar SI para diferenciar productos o permitir nuevos servicios y capacidades", "Reducir precios únicamente", "Aumentar la publicidad"],
+                answer: 1,
+                explanation: "La diferenciación de productos utiliza los SI para crear productos y servicios únicos o habilitar nuevos servicios y capacidades que los competidores no pueden igualar fácilmente, como Google, eBay o Apple."
+            },
+            {
+                question: "¿Qué caracteriza a las organizaciones 'postindustriales' según Laudon?",
+                options: ["Mayor jerarquía y control centralizado", "La autoridad se basa más en el conocimiento y competencia que en la posición formal", "Eliminación completa de la tecnología", "Solo emplean trabajadores manuales"],
+                answer: 1,
+                explanation: "En las organizaciones postindustriales, la autoridad se basa más en el conocimiento y la competencia que en la posición formal en la jerarquía, lo que lleva a estructuras organizacionales más planas y flexibles."
+            },
+            {
+                question: "El 'efecto de aplanamiento' de los SI en las organizaciones se refiere a:",
+                options: ["Reducir el tamaño físico de las oficinas", "La TI facilita la distribución de información, reduciendo la necesidad de gerentes de nivel medio", "Eliminar todos los niveles gerenciales", "Hacer que todos los empleados tengan el mismo salario"],
+                answer: 1,
+                explanation: "El aplanamiento organizacional ocurre cuando la TI facilita la distribución de información, empoderando empleados de menor nivel y aumentando la eficiencia gerencial, lo que reduce la necesidad de gerentes intermedios."
+            },
+            {
+                question: "¿Qué es la 'cadena de valor de negocios' según Porter?",
+                options: ["El precio de los productos en el mercado", "Actividades específicas que crean valor, divididas en primarias (producción/distribución) y de apoyo", "La cantidad de dinero que genera una empresa", "El organigrama de la empresa"],
+                answer: 1,
+                explanation: "La cadena de valor de Porter divide las actividades de la empresa en primarias (directamente relacionadas con producción y distribución) y de apoyo, identificando dónde se puede aplicar ventaja competitiva y dónde los SI tienen mayor impacto."
+            },
+            {
+                question: "La resistencia organizacional al cambio en la implementación de SI se debe principalmente a:",
+                options: ["Fallas tecnológicas únicamente", "Aspectos políticos y organizacionales más que problemas técnicos", "Falta de presupuesto solamente", "Problemas de hardware"],
+                answer: 1,
+                explanation: "La investigación muestra que la falta de éxito en grandes proyectos de SI no se debe principalmente a fallas tecnológicas, sino a la resistencia organizacional y política al cambio que estos sistemas pueden generar."
+            },
+            {
+                question: "Los 'ecosistemas de negocios' en el contexto de SI se refieren a:",
+                options: ["Solo las empresas de tecnología", "Amplias redes de organizaciones e individuos que interactúan para entregar productos y servicios", "El medio ambiente físico de la empresa", "Solo los competidores directos"],
+                answer: 1,
+                explanation: "Los ecosistemas de negocios son amplias redes de organizaciones e individuos que colaboran e interactúan para entregar productos y servicios, y las empresas deben considerar cómo los SI les permiten participar efectivamente en estos ecosistemas."
+            },
+            {
+                question: "¿Qué es el 'benchmarking' en el contexto de la cadena de valor?",
+                options: ["Establecer precios competitivos", "Comparar procesos de negocios con estándares y mejores prácticas industriales", "Contratar más personal", "Cambiar de ubicación geográfica"],
+                answer: 1,
+                explanation: "El benchmarking es el proceso de comparar los procesos de negocios de una empresa con los estándares de la industria y las mejores prácticas, para identificar oportunidades de mejora y ventaja competitiva."
+            },
+            {
+                question: "El impacto económico de los SI en las organizaciones incluye:",
+                options: ["Solo reducción de costos", "Cambios en los costos relativos del capital y la información, reemplazando mano de obra", "Únicamente aumento de ventas", "Solo mejoras en marketing"],
+                answer: 1,
+                explanation: "Los SI tienen impactos económicos significativos al cambiar los costos relativos del capital y la información, permitiendo que las organizaciones sustituyan mano de obra por tecnología y reduzcan costos de transacción y agencia."
+            },
+
+            // CAPÍTULO 9: Aplicaciones empresariales
+            {
+                question: "¿Cuál es la principal función de los sistemas ERP (Enterprise Resource Planning)?",
+                options: ["Solo manejar recursos humanos", "Integrar módulos de software y una base de datos central para compartir datos entre divisiones y departamentos", "Únicamente gestionar ventas", "Solo controlar inventarios"],
+                answer: 1,
+                explanation: "Los sistemas ERP integran módulos de software y una base de datos central para recolectar y hacer disponible información de múltiples divisiones y departamentos, permitiendo compartir datos entre procesos de negocios y áreas funcionales."
+            },
+            {
+                question: "El 'efecto látigo' en la cadena de suministro se refiere a:",
+                options: ["Un tipo de inventario especial", "Pequeñas fluctuaciones en la demanda que se amplifican hacia atrás en la cadena, causando inventario excesivo o desabastecimiento", "Una técnica de motivación laboral", "Un método de control de calidad"],
+                answer: 1,
+                explanation: "El efecto látigo es un fenómeno donde pequeñas fluctuaciones en la demanda del consumidor se amplifican progresivamente hacia atrás en la cadena de suministro, resultando en inventario excesivo, desabastecimiento y costos elevados."
+            },
+            {
+                question: "Los sistemas CRM (Customer Relationship Management) se dividen principalmente en:",
+                options: ["CRM barato y CRM caro", "CRM operacional (aplicaciones de cara al cliente) y CRM analítico (análisis de datos de clientes)", "CRM interno y CRM externo", "CRM simple y CRM complejo"],
+                answer: 1,
+                explanation: "Los sistemas CRM se dividen en operacional (incluyendo automatización de ventas, marketing y soporte al cliente) y analítico (que analiza datos de clientes usando OLAP y minería de datos para identificar patrones y segmentar mercados)."
+            },
+            {
+                question: "¿Qué mide el CLTV (Customer Lifetime Value) en los sistemas CRM?",
+                options: ["La edad del cliente", "El valor total que un cliente aporta durante toda su relación con la empresa", "El número de compras por año", "La satisfacción del cliente"],
+                answer: 1,
+                explanation: "El CLTV (Valor del Tiempo de Vida del Cliente) es una medida importante del CRM analítico que calcula el valor total que un cliente aporta a la empresa durante toda la duración esperada de su relación, basándose en ingresos, gastos y duración."
+            },
+            {
+                question: "Los sistemas de administración de la cadena de suministro (SCM) coordinan:",
+                options: ["Solo la producción interna", "La planificación, producción y logística con proveedores", "Únicamente las ventas", "Solo el servicio al cliente"],
+                answer: 1,
+                explanation: "Los sistemas SCM coordinan específicamente la planificación, producción y logística con proveedores, resolviendo ineficiencias causadas por información imprecisa o inoportuna en toda la cadena de suministro."
+            },
+            {
+                question: "¿Cuál es uno de los principales desafíos de implementar aplicaciones empresariales?",
+                options: ["Son muy baratas", "Requieren cambios profundos en los procesos de negocios de la empresa", "Son muy fáciles de usar", "No necesitan capacitación"],
+                answer: 1,
+                explanation: "Las aplicaciones empresariales requieren cambios organizacionales profundos en los procesos de negocios, tienen altos costos de implementación y mantenimiento, y la personalización excesiva puede degradar el rendimiento."
+            },
+            {
+                question: "Los sistemas de planificación de la cadena de suministro se enfocan en:",
+                options: ["Solo almacenar productos", "Modelar la cadena, generar pronósticos de demanda y optimizar planes de suministro", "Únicamente transportar mercancías", "Solo facturar clientes"],
+                answer: 1,
+                explanation: "Los sistemas de planificación SCM modelan la cadena de suministro existente, generan pronósticos de demanda y desarrollan planes de suministro optimizados para productos específicos."
+            },
+            {
+                question: "¿Qué ventaja proporcionan las aplicaciones empresariales en la nube (SaaS)?",
+                options: ["Son más difíciles de usar", "Mayor flexibilidad, menores costos iniciales y actualizaciones automáticas", "Requieren más hardware local", "Solo funcionan offline"],
+                answer: 1,
+                explanation: "Las aplicaciones empresariales en la nube (SaaS) ofrecen mayor flexibilidad, menores costos iniciales, actualizaciones automáticas y acceso desde cualquier ubicación, representando una tendencia importante en aplicaciones empresariales."
+            },
+            {
+                question: "Los sistemas de ejecución de la cadena de suministro se especializan en:",
+                options: ["Solo hacer pronósticos", "Administrar el flujo de productos desde los centros de distribución hasta los clientes", "Únicamente diseñar productos", "Solo negociar precios"],
+                answer: 1,
+                explanation: "Los sistemas de ejecución SCM se especializan en administrar el flujo físico de productos a través de los centros de distribución y el proceso de entrega hasta los clientes finales."
+            },
+            {
+                question: "¿Por qué es importante que las empresas adapten sus procesos de negocios al software ERP?",
+                options: ["Para hacer el software más complicado", "Para maximizar los beneficios y eficiencias del sistema integrado", "Para gastar más dinero", "Para confundir a los empleados"],
+                answer: 1,
+                explanation: "Las empresas deben adaptar sus procesos de negocios al software ERP para maximizar los beneficios de integración, estandarización y eficiencia que estos sistemas proporcionan, en lugar de personalizar excesivamente el software."
+            },
+
+            // CAPÍTULO 12: Mejora en la toma de decisiones
+            {
+                question: "Según Herbert Simon, ¿cuáles son las cuatro etapas del proceso de toma de decisiones?",
+                options: ["Planear, organizar, dirigir, controlar", "Inteligencia, diseño, elección, implementación", "Analizar, sintetizar, evaluar, decidir", "Identificar, investigar, implementar, revisar"],
+                answer: 1,
+                explanation: "Simon identifica cuatro etapas: Inteligencia (descubrir y comprender problemas), Diseño (identificar alternativas), Elección (seleccionar una alternativa), e Implementación (poner en práctica y monitorear)."
+            },
+            {
+                question: "¿Qué caracteriza a las decisiones 'estructuradas'?",
+                options: ["Son únicas y complejas", "Son repetitivas y rutinarias con un procedimiento definido", "Requieren mucha creatividad", "Son siempre estratégicas"],
+                answer: 1,
+                explanation: "Las decisiones estructuradas son repetitivas, rutinarias y tienen un procedimiento bien definido para manejarlas (como otorgar crédito). Son más comunes en el nivel operacional de la organización."
+            },
+            {
+                question: "Las decisiones 'no estructuradas' se caracterizan por:",
+                options: ["Tener procedimientos claros y definidos", "No tener un procedimiento acordado previamente y requerir juicio y perspectiva", "Ser siempre rápidas de tomar", "Solo involucrar datos cuantitativos"],
+                answer: 1,
+                explanation: "Las decisiones no estructuradas son aquellas para las cuales no existe un procedimiento acordado previamente, requieren juicio, evaluación y perspicacia humana, y son más comunes en la gerencia de nivel superior."
+            },
+            {
+                question: "¿Qué es la Inteligencia de Negocios (BI) según Laudon?",
+                options: ["Solo software de computación", "Infraestructura para almacenar, integrar, reportar y analizar datos del entorno empresarial", "Un tipo de inteligencia artificial", "Solo bases de datos grandes"],
+                answer: 1,
+                explanation: "La BI es una infraestructura integral que incluye tecnologías para almacenar, integrar, reportar y analizar datos del entorno empresarial para apoyar la toma de decisiones gerenciales."
+            },
+            {
+                question: "El Análisis de Negocios (BA) se enfoca específicamente en:",
+                options: ["Solo recolectar datos", "Las herramientas y técnicas para analizar y comprender datos empresariales", "Únicamente presentar gráficos", "Solo almacenar información"],
+                answer: 1,
+                explanation: "El BA se enfoca en las herramientas y técnicas específicas para analizar y comprender datos, incluyendo OLAP, estadísticas, modelos predictivos y minería de datos para extraer insights de la información empresarial."
+            },
+            {
+                question: "¿Qué son los 'filtros gerenciales' en el contexto de los sistemas de información?",
+                options: ["Software especial para gerentes", "Las predisposiciones y sesgos a través de los cuales los gerentes interpretan la información", "Sistemas de seguridad para datos", "Herramientas para filtrar spam"],
+                answer: 1,
+                explanation: "Los filtros gerenciales son las predisposiciones, experiencias y sesgos personales a través de los cuales los gerentes interpretan y procesan la información, lo que puede afectar la calidad de las decisiones."
+            },
+            {
+                question: "El análisis predictivo en BI utiliza principalmente:",
+                options: ["Solo datos del presente", "Técnicas de minería de datos, datos históricos y suposiciones para predecir resultados futuros", "Únicamente intuición gerencial", "Solo encuestas de opinión"],
+                answer: 1,
+                explanation: "El análisis predictivo combina técnicas de minería de datos con datos históricos y suposiciones sobre tendencias futuras para predecir resultados y comportamientos, como lo ejemplifica Capital One en su análisis de riesgo crediticio."
+            },
+            {
+                question: "Los tableros de control (dashboards) en BI tienen como función principal:",
+                options: ["Solo decorar la pantalla", "Presentar visualmente datos clave de desempeño para monitoreo ejecutivo", "Reemplazar a los gerentes", "Solo mostrar gráficos coloridos"],
+                answer: 1,
+                explanation: "Los tableros de control son herramientas visuales diseñadas para presentar información crítica de desempeño de manera rápida y comprensible, facilitando el monitoreo ejecutivo y la toma de decisiones estratégicas."
+            },
+            {
+                question: "¿Qué característica es esencial para información de alta calidad en la toma de decisiones?",
+                options: ["Solo que sea barata", "Que sea precisa, oportuna, consistente, completa y accesible", "Únicamente que sea abundante", "Solo que sea técnica"],
+                answer: 1,
+                explanation: "La información de alta calidad debe ser precisa, oportuna, consistente, completa y accesible. Estos cinco atributos son fundamentales para apoyar decisiones gerenciales efectivas."
+            },
+            {
+                question: "La capacidad de 'drill down' en sistemas BI permite:",
+                options: ["Solo ver resúmenes", "Ir desde un resumen de alto nivel hasta una vista más detallada de los datos", "Únicamente imprimir reportes", "Solo acceder a datos históricos"],
+                answer: 1,
+                explanation: "El drill down es una capacidad fundamental de BI que permite a los usuarios navegar desde información resumida de alto nivel hacia niveles de detalle progresivamente mayores para analizar problemas específicos."
+            },
+
+            // CAPÍTULO 5: Diseño de Sistemas Administrativos (Gilli)
+            {
+                question: "Según Gilli, ¿cómo define Herbert Simon el diseño aplicado a las organizaciones?",
+                options: ["Como la creación de organigramas", "Como la capacidad de transformar situaciones existentes en otras más deseables", "Como la compra de tecnología", "Como la contratación de personal"],
+                answer: 1,
+                explanation: "Herbert Simon concibe el diseño como la capacidad de transformar situaciones existentes en otras más deseables, siendo esta la base conceptual para el diseño de sistemas administrativos según Gilli."
+            },
+            {
+                question: "Un sistema administrativo se define como:",
+                options: ["Solo el software de la empresa", "El conjunto integrado de procedimientos necesarios para concretar objetivos empresariales en actividades y generar información para control", "Únicamente los formularios de la organización", "Solo la estructura organizacional"],
+                answer: 1,
+                explanation: "Gilli define el sistema administrativo como un conjunto integrado de procedimientos que transforman objetivos empresariales en actividades concretas y generan información necesaria para el control de resultados."
+            },
+            {
+                question: "Los elementos constitutivos de los sistemas administrativos según Gilli incluyen:",
+                options: ["Solo tecnología y personas", "Flujo de trabajo, flujo de información, personas y tecnología", "Únicamente procesos y datos", "Solo hardware y software"],
+                answer: 1,
+                explanation: "Gilli identifica cuatro elementos constitutivos: flujo de trabajo (acciones físicas), flujo de información (datos para decisiones), personas (recursos humanos) y tecnología (herramientas y sistemas)."
+            },
+            {
+                question: "El requisito de 'efectividad' en el diseño de sistemas administrativos se refiere a:",
+                options: ["Hacer las cosas rápido", "Hacer las cosas que se deben hacer, logrando los objetivos correctos", "Gastar menos dinero", "Usar menos tecnología"],
+                answer: 1,
+                explanation: "La efectividad o eficacia se refiere a 'hacer las cosas que se deben hacer', es decir, lograr los objetivos correctos mediante la interrelación adecuada de sectores y operaciones."
+            },
+            {
+                question: "La 'eficiencia' en sistemas administrativos implica:",
+                options: ["Solo trabajar más horas", "Hacer bien las cosas, usando los recursos de la mejor manera posible", "Contratar más personal", "Comprar más equipos"],
+                answer: 1,
+                explanation: "La eficiencia se refiere a 'hacer bien las cosas', optimizando el uso de recursos y relacionándose con la productividad y la ecuación costo-beneficio del sistema administrativo."
+            },
+            {
+                question: "El concepto de 'transparencia' en sistemas administrativos significa:",
+                options: ["Usar ventanas de cristal en oficinas", "Libre acceso a información sensible como compras, proveedores y controles de calidad", "Solo mostrar datos financieros", "Hacer reuniones públicas"],
+                answer: 1,
+                explanation: "La transparencia implica libre acceso a información sensible incluyendo compras, proveedores, controles de calidad, promociones de personal e información financiera, siendo vital especialmente en el sector público."
+            },
+            {
+                question: "La pauta de 'separación de funciones' en control interno busca:",
+                options: ["Duplicar el trabajo innecesariamente", "Desagregar funciones de decisión/autorización, custodia física y registro contable para control por oposición de intereses", "Aumentar la burocracia", "Crear más puestos de trabajo"],
+                answer: 1,
+                explanation: "La separación de funciones desagrega las actividades de decisión/autorización, custodia física y registro contable entre diferentes personas para establecer un sistema de control por oposición de intereses."
+            },
+            {
+                question: "¿Cuál es el principal impacto del cambio tecnológico en los sistemas administrativos?",
+                options: ["Solo acelerar procesos existentes", "Reinventar la organización hacia relaciones horizontales, cargos ampliados y mayor conectividad", "Únicamente reducir costos", "Solo mejorar la comunicación"],
+                answer: 1,
+                explanation: "La tecnología reinventa fundamentalmente la organización, promoviendo relaciones horizontales, cargos ampliados, descentralización y mayor conectividad con clientes y proveedores, transformando la estructura organizacional tradicional."
+            },
+            {
+                question: "Los sistemas ERP (según Gilli) se caracterizan por:",
+                options: ["Solo automatizar contabilidad", "Procesar todas las operaciones, conectar áreas funcionales y unificar información en una base de datos compartida", "Únicamente manejar inventarios", "Solo generar reportes"],
+                answer: 1,
+                explanation: "Los sistemas ERP procesan todas las operaciones organizacionales, conectan diferentes áreas funcionales y unifican toda la información en una base de datos compartida, redefiniendo supervisión y afectando estructura y cultura organizacional."
+            },
+            {
+                question: "¿Cuál es la utilidad principal de los diagramas en sistemas administrativos?",
+                options: ["Solo decorar documentos", "Representar gráficamente procedimientos y flujos de trabajo para mejor comprensión", "Únicamente cumplir regulaciones", "Solo confundir a los empleados"],
+                answer: 1,
+                explanation: "Los diagramas son herramientas fundamentales para representar gráficamente procedimientos, flujos de datos, procesos y relaciones interdepartamentales, facilitando la comprensión y documentación de sistemas administrativos."
+            },
+
+            // CAPÍTULO 6: Sistemas Operativos (Gilli)
+            {
+                question: "¿Cuáles son los cinco sistemas operativos principales según Gilli?",
+                options: ["Ventas, marketing, finanzas, producción, tecnología", "Abastecimiento, conversión, financiero, ventas, administración de personal", "Hardware, software, datos, procesos, personas", "Planificación, organización, dirección, control, evaluación"],
+                answer: 1,
+                explanation: "Gilli identifica cinco sistemas operativos básicos: abastecimiento (adquisición de insumos), conversión (transformación), financiero (fondos), ventas (comercialización) y administración de personal (recursos humanos)."
+            },
+            {
+                question: "El sistema de abastecimiento tiene impacto significativo porque:",
+                options: ["Solo maneja productos terminados", "Su costo impacta el costo general y la diferenciación competitiva de la empresa", "Únicamente se relaciona con proveedores", "Solo controla inventarios"],
+                answer: 1,
+                explanation: "El sistema de abastecimiento es crucial porque su costo tiene gran impacto en el costo general de la empresa y es fundamental para lograr diferenciación competitiva mediante la adquisición adecuada de insumos."
+            },
+            {
+                question: "En el sistema de conversión, ¿cuál es la diferencia entre producción continua e intermitente?",
+                options: ["Una es más cara que la otra", "Continua produce bienes estandarizados para inventario, intermitente produce personalizados por pedido", "Una usa más tecnología", "Una requiere más personal"],
+                answer: 1,
+                explanation: "La producción continua se enfoca en productos estandarizados para inventario con procesos repetitivos, mientras la intermitente produce bienes personalizados por pedido específico del cliente."
+            },
+            {
+                question: "¿Qué implica la 'servucción' en el sistema de conversión de servicios?",
+                options: ["Solo vender productos físicos", "La interacción de personas y/o productos en la prestación de servicios", "Únicamente automatizar procesos", "Solo reducir costos"],
+                answer: 1,
+                explanation: "La servucción se refiere específicamente a la interacción de personas y/o productos en el proceso de prestación de servicios, distinguiéndose del sistema de producción de bienes físicos."
+            },
+            {
+                question: "En el sistema de ventas, ¿por qué es más costoso adquirir nuevos clientes que retener existentes?",
+                options: ["Los nuevos clientes son más exigentes", "La retención es más rentable que la adquisición, por eso la satisfacción del cliente es fundamental", "Los clientes existentes compran más", "Los nuevos clientes pagan menos"],
+                answer: 1,
+                explanation: "Es significativamente más costoso adquirir nuevos clientes que retener los existentes, por lo que la satisfacción y retención del cliente se vuelven objetivos fundamentales del sistema de ventas."
+            },
+            {
+                question: "El proceso de cobranzas en el sistema financiero incluye:",
+                options: ["Solo emitir facturas", "Actividades desde la exigibilidad de facturas hasta la percepción efectiva del pago", "Únicamente visitar clientes", "Solo depositar dinero"],
+                answer: 1,
+                explanation: "El proceso de cobranzas abarca todas las actividades necesarias para obtener la cancelación de créditos por ventas, desde que se vuelven exigibles hasta la percepción efectiva del pago."
+            },
+            {
+                question: "¿Qué caracteriza al proceso de pagos en el sistema financiero?",
+                options: ["Solo pagar sueldos", "Actividades para cancelar obligaciones de compras, personal e impuestos con control y autorización", "Únicamente usar efectivo", "Solo pagar a proveedores"],
+                answer: 1,
+                explanation: "El proceso de pagos incluye todas las actividades para cancelar obligaciones (compras, personal, impuestos) con adecuados controles y autorizaciones, desde Cuentas a Pagar hasta Tesorería."
+            },
+            {
+                question: "En el sistema de administración de personal, ¿qué abarca la 'administración de legajos'?",
+                options: ["Solo contratar empleados", "Control continuo de formalidades, asistencia, enfermedades, accidentes, seguridad y desvinculaciones", "Únicamente pagar salarios", "Solo hacer evaluaciones"],
+                answer: 1,
+                explanation: "La administración de legajos es un proceso continuo que abarca formalidades administrativas, control de asistencia, manejo de enfermedades y accidentes, seguridad industrial y procesos de desvinculación."
+            },
+            {
+                question: "¿Cuál es el impacto principal de la tecnología informática en el sistema de abastecimiento?",
+                options: ["Solo acelerar procesos manuales", "Integrar funciones de Compras, Cuentas a Pagar y Recepción con automatización de decisiones", "Únicamente digitalizar documentos", "Solo crear bases de datos"],
+                answer: 1,
+                explanation: "La tecnología permite integrar las funciones de Compras, Cuentas a Pagar y Recepción, automatizando la detección de necesidades, emisión de órdenes de compra y gestión automática de pagos al recibir mercadería."
+            },
+            {
+                question: "¿Qué permite el diseño asistido por computadora (CAD) en el sistema de conversión?",
+                options: ["Solo dibujar planos", "Examinar diseños, simular pruebas y resolver problemas en tiempo real con bases de datos compartidas", "Únicamente almacenar imágenes", "Solo imprimir documentos"],
+                answer: 1,
+                explanation: "El CAD permite examinar diseños de productos, simular pruebas y condiciones reales, resolver problemas en tiempo real e integrar el trabajo de ingenieros mediante bases de datos compartidas para solucionar problemas rápidamente."
+            }
+        ];
+
+        let currentQuizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(quizIndex) {
+            // Mezclar preguntas y seleccionar 20
+            const shuffledQuestions = shuffleArray(allQuestions);
+            currentQuizQuestions = shuffledQuestions.slice(0, 20);
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+
+            document.getElementById('quiz-selection-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('results-screen').classList.add('hidden');
+
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentQuizQuestions[currentQuestionIndex];
+            
+            document.getElementById('current-question-number').textContent = currentQuestionIndex + 1;
+            document.getElementById('score').textContent = score;
+            document.getElementById('question').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-button';
+                button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+                button.onclick = () => selectAnswer(index, button);
+                optionsContainer.appendChild(button);
+            });
+            
+            document.getElementById('next-button').disabled = true;
+            document.getElementById('feedback-message').classList.add('hidden');
+        }
+
+        function selectAnswer(answerIndex, buttonElement) {
+            if (selectedAnswer !== null) return;
+            
+            selectedAnswer = answerIndex;
+            const question = currentQuizQuestions[currentQuestionIndex];
+            const isCorrect = answerIndex === question.answer;
+            
+            // Mostrar todas las respuestas
+            const buttons = document.querySelectorAll('.answer-button');
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === question.answer) {
+                    btn.classList.add('correct');
+                } else if (index === answerIndex && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            // Actualizar puntaje
+            if (isCorrect) {
+                score++;
+            }
+            
+            // Mostrar explicación
+            const feedbackMessage = document.getElementById('feedback-message');
+            feedbackMessage.innerHTML = `
+                <div class="explanation">
+                    <strong>${isCorrect ? '¡Correcto!' : 'Incorrecto.'}</strong><br>
+                    ${question.explanation}
+                </div>
+            `;
+            feedbackMessage.classList.remove('hidden');
+            
+            document.getElementById('next-button').disabled = false;
+        }
+
+        function nextQuestion() {
+            selectedAnswer = null;
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < currentQuizQuestions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('results-screen').classList.remove('hidden');
+            document.getElementById('final-score').textContent = score;
+        }
+
+        function restartQuiz() {
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('quiz-selection-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
