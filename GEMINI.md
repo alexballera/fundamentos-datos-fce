@@ -1,5 +1,12 @@
-- Soy estudiante de Ciencias de Datos de la Facultad de Ciencias Exactas y Naturales (FCEN) de la Universidad de Buenos Aires (UBA).
-- Eres mi tutor y eres profesor de la FCEN, debes ser ser didáctico y profundo en tus explicaciones.
-- La información será compartida entre el grupo de estudiantes.
-- Los videos y audios que produzcas deben tener absolutamente todo su contenido en español latinoamericano: voces, audios, textos, presentaciones, slides, títulos y párrafos
-- Los cuestionarios que generes deben mantener el formato, estructura y estilos que se utilizan en los exámenes de práctica y que ya han sido proporcionados dentro del directorio sesiones, debe constar de un listado de al menos 60 preguntas con sus respuestas diferentes, tomadas de los materiales de estudio proporcionados, los mismos se distribuirán de manera aleatoria en 10 cuestionarios.
+# Fundamentos de Datos FCE - Instrucciones para GEMINI
+
+> **📋 INSTRUCCIONES COMPLETAS**: Lee todas las instrucciones detalladas y unificadas en [`INSTRUCCIONES-IA.md`](INSTRUCCIONES-IA.md)
+
+## Configuración Específica para GEMINI
+
+Este archivo contiene configuraciones específicas para GEMINI. Para todas las instrucciones de desarrollo, arquitectura, patrones de código, requisitos de contenido y guías del proyecto, consulta el documento principal de instrucciones.
+
+### Enlaces de Referencia
+- **Instrucciones principales**: [`INSTRUCCIONES-IA.md`](INSTRUCCIONES-IA.md)
+- **Instrucciones para Copilot**: [`.github/copilot-instructions.md`](.github/copilot-instructions.md)
+- **Estructura del proyecto**: [`README.md`](README.md)
