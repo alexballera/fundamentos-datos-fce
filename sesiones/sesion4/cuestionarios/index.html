@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exámenes de práctica sobre Sistemas de Información Integrados - ERP, SCM, CRM, KMS - Sesión 4 FCE">
+    <meta name="keywords" content="sistemas información integrados, ERP, SCM, CRM, KMS, sistemas empresariales, cadena suministro, relaciones clientes, conocimiento, FCE">
+    <meta name="author" content="Fundamentos de Datos FCE - UBA">
+    <title>Exámenes de Práctica - Sistemas de Información Integrados - Sesión 4 FCE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #a78bfa 100%);
+        }
+        .quiz-button {
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .quiz-button:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+        }
+        .quiz-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .answer-button {
+            width: 100%;
+            background-color: #e5e7eb;
+            color: #1f2937;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .answer-button:hover:not(:disabled) {
+            background-color: #d1d5db;
+        }
+        .answer-button.correct {
+            background-color: #10b981;
+            color: white;
+            animation: pulse-correct 0.8s;
+        }
+        .answer-button.incorrect {
+            background-color: #ef4444;
+            color: white;
+            animation: shake 0.5s;
+        }
+        .explanation {
+            background-color: #f0f4f8;
+            border-left: 4px solid #4f46e5;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+        }
+        @keyframes pulse-correct {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div id="app" class="container bg-white p-8 rounded-2xl shadow-xl w-full">
+        <!-- Pantalla de selección de cuestionarios -->
+        <div id="quiz-selection-screen">
+            <h1 class="text-3xl font-bold text-center mb-4 text-indigo-700">Selecciona un Examen de Práctica - Sesión 4</h1>
+            <p class="text-center text-gray-600 mb-8">Cada examen contiene 20 preguntas aleatorias sobre Sistemas de Información Integrados: ERP, SCM, CRM y KMS. Cubre conceptos fundamentales, implementación, beneficios y desafíos de estos sistemas empresariales. ¡Mucha suerte!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <button onclick="startQuiz(0)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 1</button>
+                <button onclick="startQuiz(1)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 2</button>
+                <button onclick="startQuiz(2)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 3</button>
+                <button onclick="startQuiz(3)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 4</button>
+                <button onclick="startQuiz(4)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 5</button>
+                <button onclick="startQuiz(5)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 6</button>
+                <button onclick="startQuiz(6)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 7</button>
+                <button onclick="startQuiz(7)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 8</button>
+                <button onclick="startQuiz(8)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 9</button>
+                <button onclick="startQuiz(9)" class="card p-6 text-center gradient-bg text-white font-bold text-xl rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none">Examen de Práctica 10</button>
+            </div>
+        </div>
+
+        <!-- Pantalla del cuestionario -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-lg font-semibold text-gray-700">Pregunta <span id="current-question-number"></span> de 20</div>
+                <div class="text-lg font-semibold text-gray-700">Puntaje: <span id="score">0</span></div>
+            </div>
+            <div class="card p-6 mb-6">
+                <h2 id="question" class="text-xl font-semibold text-gray-900 mb-6"></h2>
+                <div id="options-container" class="space-y-4"></div>
+            </div>
+            <div id="feedback-message" class="text-center p-4 my-4 rounded-lg font-semibold hidden"></div>
+            <button id="next-button" class="quiz-button w-full py-4 mt-6 gradient-bg text-white font-bold text-lg rounded-lg shadow-md focus:outline-none" onclick="nextQuestion()" disabled>Siguiente</button>
+        </div>
+
+        <!-- Pantalla de resultados -->
+        <div id="results-screen" class="hidden text-center">
+            <h1 class="text-3xl font-bold text-indigo-700 mb-4">¡Examen Completo!</h1>
+            <p class="text-xl text-gray-700 mb-6">Tu puntaje final es:</p>
+            <div class="text-5xl font-extrabold text-white gradient-bg p-8 rounded-full inline-block shadow-lg mb-8">
+                <span id="final-score"></span>
+                <span class="block text-2xl font-normal mt-2">de 20</span>
+            </div>
+            <p class="text-lg text-gray-600 mb-4">¡Sigue practicando para dominar los sistemas de información integrados!</p>
+            <button class="quiz-button py-4 px-8 mt-4 bg-indigo-600 text-white font-bold text-lg rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none" onclick="restartQuiz()">Volver a la selección</button>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // SISTEMAS DE INFORMACIÓN INTEGRADOS - CONCEPTOS FUNDAMENTALES
+            {
+                question: "¿Qué característica define a los sistemas de información integrados?",
+                options: ["Solo integran el área de ventas", "Abarcan áreas funcionales, se centran en procesos de negocio empresariales e incluyen todos los niveles gerenciales", "Únicamente procesan transacciones", "Solo funcionan en empresas pequeñas"],
+                answer: 1,
+                explanation: "Los sistemas de información integrados se caracterizan por abarcar múltiples áreas funcionales, centrarse en la ejecución de procesos de negocio a través de toda la empresa e incluir todos los niveles gerenciales, desde operativo hasta estratégico."
+            },
+            {
+                question: "¿Cuáles son los cuatro tipos principales de sistemas de información integrados?",
+                options: ["Hardware, Software, Datos, Personas", "ERP, SCM, CRM, KMS", "Input, Proceso, Output, Feedback", "Operacional, Táctico, Estratégico, Ejecutivo"],
+                answer: 1,
+                explanation: "Los cuatro tipos principales son: Sistemas Empresariales (ERP), Sistemas de Administración de la Cadena de Suministro (SCM), Sistemas de Administración de las Relaciones con los Clientes (CRM) y Sistemas de Administración del Conocimiento (KMS)."
+            },
+
+            // SISTEMAS EMPRESARIALES (ERP)
+            {
+                question: "¿Cuál es la función principal de un sistema ERP?",
+                options: ["Solo manejar contabilidad", "Integrar y automatizar procesos de negocio en manufactura, finanzas, ventas y recursos humanos en un solo sistema", "Únicamente gestionar inventarios", "Solo procesar transacciones de ventas"],
+                answer: 1,
+                explanation: "Los sistemas ERP integran y automatizan los procesos de negocio internos en áreas como manufactura, producción, finanzas, contabilidad, ventas, marketing y recursos humanos, funcionando como la 'columna vertebral interfuncional' de la empresa."
+            },
+            {
+                question: "¿Por qué se considera a los sistemas ERP como la 'columna vertebral interfuncional empresarial'?",
+                options: ["Porque son muy caros", "Porque integran y automatizan procesos y sistemas de información a través de diversas funciones empresariales", "Porque solo funcionan en grandes empresas", "Porque reemplazan a todos los empleados"],
+                answer: 1,
+                explanation: "Los ERP son la 'columna vertebral interfuncional' porque integran y automatizan muchos procesos internos de negocio y sistemas de información dentro de múltiples funciones empresariales, creando un flujo de información unificado."
+            },
+            {
+                question: "¿Cuál de los siguientes NO es un beneficio típico de los sistemas ERP?",
+                options: ["Claridad y eficiencia en procesos", "Disminución de costos de procesamiento", "Apoyo a la toma de decisiones", "Eliminación completa del personal"],
+                answer: 3,
+                explanation: "Los ERP no eliminan personal, sino que mejoran la claridad y eficiencia, reducen costos de procesamiento y hardware, proporcionan información vital para decisiones y crean estructuras de trabajo más ágiles."
+            },
+            {
+                question: "Según el material, ¿cuál es el mayor componente del costo de implementación de un ERP?",
+                options: ["Hardware (50%)", "Reingeniería de procesos (43%)", "Software (70%)", "Capacitación (5%)"],
+                answer: 1,
+                explanation: "La reingeniería de procesos representa el 43% de los costos de implementación de ERP, siendo el componente más costoso, seguido por conversiones de datos (15%), capacitación y administración del cambio (15%), y software (15%)."
+            },
+            {
+                question: "¿Cuál es una de las principales causas de falla en implementaciones ERP?",
+                options: ["Demasiado software", "Subestimación de la complejidad de planificación, desarrollo y capacitación", "Exceso de hardware", "Demasiados empleados"],
+                answer: 1,
+                explanation: "La subestimación de la complejidad de la planificación, desarrollo y capacitación necesarios es una causa principal de fallas, junto con la falta de involucramiento de empleados afectados y capacitación insuficiente."
+            },
+            {
+                question: "El caso de Colgate-Palmolive con SAP R/3 demostró que los ERP pueden:",
+                options: ["Aumentar los tiempos de procesamiento", "Reducir el tiempo de procesamiento de pedidos de siete días a cuatro horas", "Solo funcionar en empresas pequeñas", "Eliminar todos los inventarios"],
+                answer: 1,
+                explanation: "Colgate-Palmolive logró reducir dramáticamente el tiempo de adquisición y procesamiento de pedidos de hasta siete días a cuatro horas mediante la implementación de SAP R/3, demostrando los beneficios de eficiencia de los ERP."
+            },
+            {
+                question: "¿Qué requieren los sistemas ERP de las empresas para su exitosa implementación?",
+                options: ["Solo comprar el software", "Que los procesos de la empresa se adapten a los procedimientos del sistema ERP", "Únicamente contratar consultores", "Solo capacitar gerentes"],
+                answer: 1,
+                explanation: "Una característica crítica de los ERP es que los procesos de negocio de la empresa deben adaptarse a los procedimientos del sistema ERP, lo que requiere una reingeniería significativa de los procesos existentes."
+            },
+
+            // SISTEMAS DE ADMINISTRACIÓN DE LA CADENA DE SUMINISTRO (SCM)
+            {
+                question: "¿Cuál es el objetivo primordial de un sistema SCM?",
+                options: ["Solo reducir costos", "Llevar la cantidad correcta de productos desde el origen hasta el consumo en el menor tiempo y al menor costo", "Únicamente manejar inventarios", "Solo comunicarse con proveedores"],
+                answer: 1,
+                explanation: "El objetivo primordial de SCM es mover la cantidad correcta de productos desde su origen hasta su punto de consumo en el menor tiempo posible y con el costo más bajo, optimizando toda la cadena de suministro."
+            },
+            {
+                question: "Los sistemas SCM son considerados 'interorganizacionales' porque:",
+                options: ["Solo funcionan dentro de una empresa", "Automatizan el flujo de información a través de los límites organizacionales entre múltiples empresas", "Únicamente conectan departamentos internos", "Solo manejan datos financieros"],
+                answer: 1,
+                explanation: "Los SCM son interorganizacionales porque automatizan el flujo de información a través de los límites organizacionales, conectando proveedores, empresas de compras, distribuidores y compañías de logística."
+            },
+            {
+                question: "¿Qué es el Intercambio Electrónico de Datos (EDI) en el contexto de SCM?",
+                options: ["Un tipo de base de datos", "El intercambio electrónico de documentos de transacciones de negocio entre socios comerciales", "Un software de contabilidad", "Una red social empresarial"],
+                answer: 1,
+                explanation: "EDI es el intercambio electrónico de documentos de transacciones de negocio (como órdenes de compra, facturas) entre las computadoras en red de socios comerciales, utilizando formatos estandarizados."
+            },
+            {
+                question: "El caso de TaylorMade Golf demuestra que los sistemas SCM pueden:",
+                options: ["Solo aumentar costos", "Ahorrar $50 millones en costos de producción y duplicar el negocio de productos personalizados", "Únicamente mejorar la comunicación", "Solo reducir el personal"],
+                answer: 1,
+                explanation: "TaylorMade Golf ahorró $50 millones en costos de producción y duplicó su negocio de palos personalizados al trasladar su cadena de suministro a la web, demostrando los beneficios tangibles de SCM."
+            },
+            {
+                question: "¿Qué problema experimentó Solectron Corp. que ilustra los riesgos de una mala gestión de SCM?",
+                options: ["Perdió todos sus clientes", "Tuvo un exceso de $4.7 mil millones en inventario debido a pronósticos erróneos", "Se declaró en bancarrota", "Perdió todos sus datos"],
+                answer: 1,
+                explanation: "Solectron Corp. experimentó un exceso de $4.7 mil millones en inventario debido a pronósticos erróneos de demanda de sus clientes, ilustrando la importancia de una información precisa en SCM."
+            },
+            {
+                question: "¿Qué significa CPFR en el contexto de sistemas SCM?",
+                options: ["Control de Productos y Fabricación Rápida", "Planeación, Pronóstico y Reabastecimiento Colaborativos", "Control de Procesos y Finanzas Regulares", "Coordinación de Productos y Fabricación Remota"],
+                answer: 1,
+                explanation: "CPFR significa Collaborative Planning, Forecasting, and Replenishment (Planeación, Pronóstico y Reabastecimiento Colaborativos), representando una tendencia avanzada en SCM donde minoristas y fabricantes trabajan juntos."
+            },
+
+            // SISTEMAS DE ADMINISTRACIÓN DE RELACIONES CON CLIENTES (CRM)
+            {
+                question: "¿Cuál es el objetivo principal de un sistema CRM?",
+                options: ["Solo aumentar ventas", "Administrar el rango completo de relaciones con clientes proporcionando una visión única de cada cliente", "Únicamente automatizar marketing", "Solo reducir costos de servicio"],
+                answer: 1,
+                explanation: "El objetivo principal de CRM es administrar el rango completo de las relaciones con los clientes, proporcionando una visión única y completa de cada cliente a la organización y una visión completa de la empresa al cliente."
+            },
+            {
+                question: "¿Cuáles son las tres fases del ciclo de vida del cliente en CRM?",
+                options: ["Planear, Ejecutar, Controlar", "Adquirir, Incrementar, Retener", "Identificar, Contactar, Vender", "Buscar, Encontrar, Comprar"],
+                answer: 1,
+                explanation: "Las tres fases son: Adquirir (conseguir nuevos clientes), Incrementar (mantener satisfechos a los clientes existentes mediante servicio superior y ventas cruzadas/verticales), y Retener (identificar y recompensar a los clientes más leales y rentables)."
+            },
+            {
+                question: "¿Por qué es importante la retención de clientes según el material de CRM?",
+                options: ["Es más fácil", "Cuesta seis veces más vender a un cliente nuevo que a uno existente", "Es más rápido", "Es más divertido"],
+                answer: 1,
+                explanation: "La retención es crucial porque cuesta seis veces más vender a un cliente nuevo que a uno existente, haciendo que la retención de clientes sea una estrategia financieramente más eficiente."
+            },
+            {
+                question: "¿Qué demostró el caso de Mitsubishi Motor Sales con su implementación de CRM?",
+                options: ["Que CRM no funciona", "Incrementó la satisfacción del cliente en un 8% y redujo el costo por llamada en casi dos tercios", "Solo aumentó las ventas", "Únicamente mejoró la tecnología"],
+                answer: 1,
+                explanation: "Mitsubishi Motor Sales incrementó la satisfacción del cliente en un 8% y redujo el costo por llamada en casi dos tercios al consolidar sus servicios de atención telefónica con tecnología CRM."
+            },
+            {
+                question: "¿Cuál es la principal razón de falla en proyectos CRM según el material?",
+                options: ["Falta de tecnología", "Falta de preparación y comprensión, no desarrollar cambios en procesos de negocio", "Demasiado personal", "Falta de dinero"],
+                answer: 1,
+                explanation: "La principal razón de falla en CRM es la falta de preparación y comprensión por parte de la administración, especialmente no desarrollar los cambios necesarios en procesos de negocio y programas de administración del cambio."
+            },
+            {
+                question: "¿Qué diferencia al CRM Analítico del CRM Operativo?",
+                options: ["El costo", "CRM Analítico extrae información detallada para análisis, mientras CRM Operativo apoya la interacción directa con clientes", "La velocidad", "El tamaño de la empresa"],
+                answer: 1,
+                explanation: "CRM Analítico utiliza minería de datos y software analítico para extraer información sobre comportamiento y rentabilidad del cliente, mientras CRM Operativo se enfoca en automatizar las interacciones directas con clientes a través de múltiples canales."
+            },
+
+            // SISTEMAS DE ADMINISTRACIÓN DEL CONOCIMIENTO (KMS)
+            {
+                question: "¿Cuál es el propósito principal de los Sistemas de Administración del Conocimiento (KMS)?",
+                options: ["Solo almacenar documentos", "Permitir a las organizaciones capturar, aplicar y compartir conocimiento y experiencia", "Únicamente crear bases de datos", "Solo automatizar procesos"],
+                answer: 1,
+                explanation: "Los KMS permiten a las organizaciones administrar mejor los procesos para capturar y aplicar el conocimiento y la experiencia, recolectando conocimiento relevante y haciéndolo disponible cuando se requiera para mejorar procesos y decisiones."
+            },
+            {
+                question: "¿Por qué es valioso el conocimiento empresarial según el material de KMS?",
+                options: ["Es barato de obtener", "Es difícil de imitar, único y se puede aprovechar para beneficios estratégicos a largo plazo", "Es fácil de copiar", "Es temporal"],
+                answer: 1,
+                explanation: "El conocimiento empresarial es valioso porque es difícil de imitar, único para cada organización y se puede aprovechar para obtener beneficios estratégicos a largo plazo que son sostenibles."
+            },
+
+            // INTEGRACIÓN Y TENDENCIAS
+            {
+                question: "¿Qué son los 'paquetes integrados de negocios electrónicos'?",
+                options: ["Solo software ERP", "Suites de software modulares basados en web que integran ERP, CRM, SCM y otras aplicaciones", "Únicamente sistemas CRM", "Solo aplicaciones móviles"],
+                answer: 1,
+                explanation: "Son suites de software modulares y basados en la web que integran ERP, CRM, SCM, procuración, apoyo a la toma de decisiones, portales empresariales y otras aplicaciones en una plataforma unificada."
+            },
+            {
+                question: "¿Cómo han evolucionado los sistemas ERP según el material?",
+                options: ["Se han vuelto más simples", "Han evolucionado hacia mayor flexibilidad, están basados en web y se extienden a aplicaciones de negocios electrónicos", "Se han vuelto más caros únicamente", "Solo funcionan offline"],
+                answer: 1,
+                explanation: "Los sistemas ERP han evolucionado para ser más flexibles, basados en la web y se han extendido a aplicaciones de negocios electrónicos, incorporando comercio electrónico, planeación avanzada e inteligencia de negocios."
+            },
+            {
+                question: "¿Qué papel juegan Internet, intranets y extranets en los sistemas integrados?",
+                options: ["No tienen relevancia", "Facilitan la interconexión y colaboración entre sistemas internos y con socios externos", "Solo aumentan costos", "Únicamente complican los procesos"],
+                answer: 1,
+                explanation: "Internet, intranets y extranets facilitan la interconexión y colaboración entre sistemas internos de la empresa y con socios de negocio externos, impulsando la evolución hacia sistemas más integrados y colaborativos."
+            },
+
+            // CASOS DE ESTUDIO Y EJEMPLOS
+            {
+                question: "¿Qué problema experimentó Agilent Technologies en su implementación ERP?",
+                options: ["Perdió empleados", "Perdió $105 millones en ingresos y $70 millones en utilidades debido a problemas de migración", "Solo aumentaron los costos", "Perdió clientes menores"],
+                answer: 1,
+                explanation: "Agilent Technologies experimentó pérdidas significativas de $105 millones en ingresos y $70 millones en utilidades debido a problemas en la migración a Oracle ERP, ilustrando los riesgos de implementaciones mal ejecutadas."
+            },
+            {
+                question: "¿Qué beneficio obtuvo HON Industries de su sistema SCM?",
+                options: ["Solo mejoró la comunicación", "Redujo costos de fletes y aumentó las rotaciones de inventario", "Únicamente aumentó ventas", "Solo mejoró la satisfacción laboral"],
+                answer: 1,
+                explanation: "HON Industries logró reducir los costos de fletes y aumentar las rotaciones de inventario mediante su implementación de SCM, a pesar de enfrentar resistencia inicial de los empleados."
+            },
+            {
+                question: "¿Qué ilustra el caso de Gevity HR sobre implementaciones CRM?",
+                options: ["Que CRM siempre funciona", "Los riesgos de resistencia del personal y problemas de integración en proyectos CRM", "Que la tecnología lo resuelve todo", "Que no se necesita capacitación"],
+                answer: 1,
+                explanation: "El caso de Gevity HR ilustra los riesgos de resistencia del personal (que se sintió amenazado por el software CRM) y los problemas de integración de sistemas complejos que pueden hundir el rendimiento."
+            },
+            {
+                question: "¿Qué demuestra la colaboración entre Wal-Mart y Mattel en SCM?",
+                options: ["Que la competencia es mejor", "Los beneficios de la SCM colaborativa donde proveedores aprenden a optimizar con sus principales clientes", "Que solo las grandes empresas pueden colaborar", "Que la tecnología no es importante"],
+                answer: 1,
+                explanation: "La colaboración entre Wal-Mart y Mattel ejemplifica los beneficios de la SCM colaborativa, donde Mattel aprendió a optimizar su cadena de suministro trabajando estrechamente con su principal cliente."
+            },
+
+            // CONCEPTOS AVANZADOS Y TENDENCIAS
+            {
+                question: "¿Qué es SCEM (Supply Chain Event Management)?",
+                options: ["Un tipo de base de datos", "Aplicaciones que permiten monitoreo en tiempo real de sistemas SCM y reacción a problemas", "Un protocolo de comunicación", "Una metodología de gestión"],
+                answer: 1,
+                explanation: "SCEM (Supply Chain Event Management) son aplicaciones que permiten a las empresas monitorear en tiempo real el funcionamiento de sus sistemas SCM y reaccionar rápidamente a problemas o anomalías en la cadena de suministro."
+            },
+            {
+                question: "¿Qué caracteriza al CRM Colaborativo?",
+                options: ["Solo funciona internamente", "Permite colaboración con clientes, proveedores y socios, mejorando la eficacia de la cadena de suministro", "Únicamente analiza datos", "Solo automatiza ventas"],
+                answer: 1,
+                explanation: "El CRM Colaborativo extiende la funcionalidad tradicional para involucrar a socios de negocio y clientes en servicios colaborativos, incluyendo sistemas de autoservicio y administración de relaciones con socios (PRM)."
+            },
+            {
+                question: "¿Cuál es una tendencia clave en la evolución de los sistemas integrados?",
+                options: ["Volver a sistemas separados", "Mayor integración mediante portales web y servicios basados en Internet", "Eliminar la tecnología", "Solo funcionar offline"],
+                answer: 1,
+                explanation: "Una tendencia clave es la mayor integración a través de portales web, servicios basados en Internet y la adopción de estándares web que facilitan la interoperabilidad entre diferentes sistemas y organizaciones."
+            },
+            {
+                question: "¿Qué problema fundamental resuelven los sistemas de información integrados?",
+                options: ["Solo reducir personal", "La fragmentación de información en sistemas separados, consolidándola en almacenes de datos únicos", "Únicamente aumentar velocidad", "Solo mejorar gráficos"],
+                answer: 1,
+                explanation: "Los sistemas integrados resuelven el problema fundamental de la fragmentación de información que antes estaba dispersa en muchos sistemas distintos, consolidándola en almacenes de datos únicos y accesibles para toda la organización."
+            }
+        ];
+
+        let currentQuizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(quizIndex) {
+            // Mezclar preguntas y seleccionar 20
+            const shuffledQuestions = shuffleArray(allQuestions);
+            currentQuizQuestions = shuffledQuestions.slice(0, 20);
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+
+            document.getElementById('quiz-selection-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('results-screen').classList.add('hidden');
+
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentQuizQuestions[currentQuestionIndex];
+            
+            document.getElementById('current-question-number').textContent = currentQuestionIndex + 1;
+            document.getElementById('score').textContent = score;
+            document.getElementById('question').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-button';
+                button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+                button.onclick = () => selectAnswer(index, button);
+                optionsContainer.appendChild(button);
+            });
+            
+            document.getElementById('next-button').disabled = true;
+            document.getElementById('feedback-message').classList.add('hidden');
+        }
+
+        function selectAnswer(answerIndex, buttonElement) {
+            if (selectedAnswer !== null) return;
+            
+            selectedAnswer = answerIndex;
+            const question = currentQuizQuestions[currentQuestionIndex];
+            const isCorrect = answerIndex === question.answer;
+            
+            // Mostrar todas las respuestas
+            const buttons = document.querySelectorAll('.answer-button');
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === question.answer) {
+                    btn.classList.add('correct');
+                } else if (index === answerIndex && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            // Actualizar puntaje
+            if (isCorrect) {
+                score++;
+            }
+            
+            // Mostrar explicación
+            const feedbackMessage = document.getElementById('feedback-message');
+            feedbackMessage.innerHTML = `
+                <div class="explanation">
+                    <strong>${isCorrect ? '¡Correcto!' : 'Incorrecto.'}</strong><br>
+                    ${question.explanation}
+                </div>
+            `;
+            feedbackMessage.classList.remove('hidden');
+            
+            document.getElementById('next-button').disabled = false;
+        }
+
+        function nextQuestion() {
+            selectedAnswer = null;
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < currentQuizQuestions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('results-screen').classList.remove('hidden');
+            document.getElementById('final-score').textContent = score;
+        }
+
+        function restartQuiz() {
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('quiz-selection-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
